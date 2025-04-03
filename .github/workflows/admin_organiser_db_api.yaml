@@ -15,7 +15,7 @@ jobs:
       packages: write
       id-token: write
     env:
-      PACKAGE: qu-admin-organiser-db-api
+      PACKAGE: '@coderbois-2-0/qu-admin-organiser-db-api'
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
