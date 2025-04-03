@@ -1,14 +1,14 @@
 import { relations } from "drizzle-orm";
-import { datetime, mysqlTable, varchar } from "drizzle-orm/mysql-core";
-import { postsSchema } from "./index.js";
+import { pgTable, varchar, timestamp } from "drizzle-orm/pg-core";
+import { postsSchema } from "./index";
 
-const commentsTable = mysqlTable('comments', {
-    id: varchar('id', { length: 80 }).primaryKey(),
+const commentsTable = pgTable('comments', {
+    id: varchar('id', { length: 128 }).primaryKey(),
     text: varchar('text', { length: 10 }).notNull(),
-    userId: varchar('user_id', { length: 80 }).notNull(),
+    userId: varchar('user_id', { length: 128 }).notNull(),
     userUsername: varchar('user_username', { length: 10 }).notNull(),
-    postId: varchar('post_id', { length: 80 }).notNull(),
-    createdAt: datetime('created_at').notNull()
+    postId: varchar('post_id', { length: 128 }).notNull(),
+    createdAt: timestamp('created_at').notNull()
 });
 
 const commentsRelation = relations(commentsTable, ({ one }) => {

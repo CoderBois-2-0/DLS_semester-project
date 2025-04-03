@@ -1,7 +1,7 @@
-import * as eventsSchema from './eventsSchema.js';
-import * as ticketsSchema from './ticketsSchema.js';
-import * as postsSchema from './postsSchema.js';
-import * as commentsSchema from './commentsSchema.js';
+import * as eventsSchema from './eventsSchema';
+import * as ticketsSchema from './ticketsSchema';
+import * as postsSchema from './postsSchema';
+import * as commentsSchema from './commentsSchema';
 
 export {
     eventsSchema,

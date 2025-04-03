@@ -1,15 +1,15 @@
 import { relations } from "drizzle-orm";
-import { mysqlTable, varchar, datetime } from "drizzle-orm/mysql-core";
-import { ticketsSchema } from "./index.js";
+import { pgTable, varchar, timestamp } from "drizzle-orm/pg-core";
+import { ticketsSchema } from "./index";
 
-const eventsTable = mysqlTable('events', {
-    id: varchar('id', { length: 80 }).primaryKey(),
+const eventsTable = pgTable('events', {
+    id: varchar('id', { length: 128 }).primaryKey(),
     name: varchar('name', { length: 10 }).notNull(),
-    userId: varchar('user_id', { length: 80 }).notNull(),
+    userId: varchar('user_id', { length: 128 }).notNull(),
     userEmail: varchar('user_email', { length: 50 }).notNull(),
     userUsername: varchar('user_username', { length: 10 }).notNull(),
     location: varchar('location', { length: 50 }),
-    createdAt: datetime('created_at').notNull()
+    createdAt: timestamp('created_at').notNull()
 });
 
 const eventsRelation = relations(eventsTable, ({ many }) => {

@@ -5,6 +5,9 @@
   "repository": "https://github.com/CoderBois-2-0/DLS_queue-up",
   "main": "index.js",
   "type": "module",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "format": "prettier --config ../../.prettierrc --write .",
     "lint": "prettier --config ../../.prettierrc --check .",
@@ -17,10 +20,13 @@
   "license": "ISC",
   "packageManager": "pnpm@10.4.1",
   "dependencies": {
-    "@types/node": "^20.11.17",
-    "drizzle-kit": "^0.30.6",
+    "@neondatabase/serverless": "^1.0.0",
     "drizzle-orm": "^0.41.0",
-    "mysql2": "^3.14.0",
+    "pg": "^8.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.23",
+    "drizzle-kit": "^0.30.6",
     "typescript": "^5.8.2"
   }
 }

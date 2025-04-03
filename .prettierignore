@@ -1,6 +1,9 @@
+.vscode
+
 node_modules
 dist
 routeTree.gen.ts
 README
-.vscode
 .env
+Dockerfile
+drizzle.config.ts

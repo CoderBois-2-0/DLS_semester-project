@@ -2,7 +2,8 @@
     "compilerOptions": {
         "declaration": true,
         "target": "ESNext",
-        "module": "NodeNext",
+        "module": "ES2015",
+        "moduleResolution": "bundler",
         "strict": true,
         "verbatimModuleSyntax": true,
         "skipLibCheck": true,

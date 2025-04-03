@@ -1,15 +1,10 @@
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from 'drizzle-orm/neon-http';
 import { eventsSchema, ticketsSchema, postsSchema, commentsSchema } from './schemas/index.js';
-import mysql from "mysql2/promise";
 
-const DATABASE_URL = process.env.DATABASE_URL ?? 'No Database Url';
+const DB_URL = process.env.DB_URL ?? 'No Database Url';
 
 async function connect() {
-    const conn = await mysql.createConnection({
-        uri: DATABASE_URL
-    });
-
-    return drizzle({ client: conn, schema: { ...eventsSchema, ...ticketsSchema, ...postsSchema, ...commentsSchema }, mode: 'default'})
+    return drizzle(DB_URL, { schema: { ...eventsSchema, ...ticketsSchema, ...postsSchema, ...commentsSchema }})
 }
 
 function getDB() {
