@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - BOIS-11/*
-    paths:
-      - 'packages/qu_admin_organiser_db_api/lib/schemas/*'
+#    paths:
+#      - 'packages/qu_admin_organiser_db_api/lib/schemas/*'
 
 jobs:
   migrate:
@@ -15,6 +15,7 @@ jobs:
       packages: write
       id-token: write
     env:
+      DB_URL: ${{ secrets.DB_URL }}
       PACKAGE: '@coderbois-2-0/qu-admin-organiser-db-api'
 
     steps:
