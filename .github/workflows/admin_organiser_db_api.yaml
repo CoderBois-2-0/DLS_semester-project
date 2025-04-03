@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - BOIS-11/*
-    paths:
-      - 'packages/qu_admin_organiser_db_api'
+#    paths:
+#      - 'packages/qu_admin_organiser_db_api'
 
 jobs:
   publish:
