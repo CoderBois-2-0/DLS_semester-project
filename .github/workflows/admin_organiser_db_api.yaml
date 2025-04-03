@@ -5,7 +5,7 @@ on:
     branches:
       - BOIS-11/*
 #    paths:
-#      - 'packages/qu_admin_organiser_db_api'
+#      - 'packages/qu_admin_organiser_db_api/**'
 
 jobs:
   publish:
@@ -15,7 +15,8 @@ jobs:
       packages: write
       id-token: write
     env:
-      PACKAGE: --filter qu-admin-organiser-db-api
+      PACKAGE: '@coderbois-2-0/qu-admin-organiser-db-api'
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout code
@@ -35,8 +36,6 @@ jobs:
 
       - name: Build package
         run: pnpm --filter $PACKAGE build
-
-      - name: Publish to npm
-        run: pnpm --filter $PACKAGE publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Publish to github packages
+        run: pnpm --filter $PACKAGE publish --no-git-checks
