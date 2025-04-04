@@ -1,15 +1,25 @@
 import { drizzle } from 'drizzle-orm/neon-http';
-import { eventsSchema, ticketsSchema, postsSchema, commentsSchema } from './schemas/index.js';
+import {
+    eventsSchema,
+    ticketsSchema,
+    postsSchema,
+    commentsSchema,
+} from './schemas/index.js';
 
-const DB_URL = process.env.DB_URL ?? 'No Database Url';
-
-async function connect() {
-    return drizzle(DB_URL, { schema: { ...eventsSchema, ...ticketsSchema, ...postsSchema, ...commentsSchema }})
+async function connect(dbUrl: string) {
+    return drizzle(dbUrl, {
+        schema: {
+            ...eventsSchema,
+            ...ticketsSchema,
+            ...postsSchema,
+            ...commentsSchema,
+        },
+    });
 }
 
-function getDB() {
+function getDB(dbUrl: string) {
     if (!db) {
-        db = connect();
+        db = connect(dbUrl);
     }
 
     return db;
@@ -17,6 +27,4 @@ function getDB() {
 
 let db: null | ReturnType<typeof connect> = null;
 
-export {
-    getDB
-};
+export { getDB };

@@ -27,9 +27,7 @@ jobs:
         with:
           node-version: 22
           registry-url: 'https://npm.pkg.github.com'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm --filter $PACKAGE install

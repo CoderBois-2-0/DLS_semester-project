@@ -21,6 +21,9 @@ importers:
         specifier: ^8.26.1
         version: 8.26.1(eslint@9.22.0)(typescript@5.8.2)
     devDependencies:
+      husky:
+        specifier: ^9.1.7
+        version: 9.1.7
       prettier:
         specifier: 3.5.3
         version: 3.5.3
@@ -1694,6 +1697,11 @@ packages:
   hono@4.7.4:
     resolution: {integrity: sha512-Pst8FuGqz3L7tFF+u9Pu70eI0xa5S3LPUmrNd5Jm8nTHze9FxLTK9Kaj5g/k4UcwuJSXTP65SyHOPLrffpcAJg==}
     engines: {node: '>=16.9.0'}
+
+  husky@9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
@@ -3928,6 +3936,8 @@ snapshots:
       function-bind: 1.1.2
 
   hono@4.7.4: {}
+
+  husky@9.1.7: {}
 
   iconv-lite@0.6.3:
     dependencies:

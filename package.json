@@ -6,7 +6,8 @@
   "scripts": {
     "format": "pnpm -r format",
     "lint": "pnpm -r lint && eslint --cache --cache-location node_modules/.eslintcache 'packages/**/*.ts' 'apps/**/*.ts'",
-    "build": "pnpm -r build"
+    "build": "pnpm -r build",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     ]
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "prettier": "3.5.3"
   },
   "dependencies": {
