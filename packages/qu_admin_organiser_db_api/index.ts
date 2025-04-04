@@ -1,5 +1,5 @@
-import * as handlers from './lib/handlers/index.js';
+import { getHandlers } from './lib';
 
 export default {
-    ...handlers,
+    getHandlers
 };

@@ -5,8 +5,13 @@ import {
     postsSchema,
     commentsSchema,
 } from './schemas/index.js';
+import { createEventsHandler } from './handlers/eventsHandler.js';
+import { createTicketsHandler } from './handlers/ticketsHandler.js';
+import { createPostsHandler } from './handlers/postsHandler.js';
+import { createCommentsHandler } from './handlers/commentsHandler.js';
 
-async function connect(dbUrl: string) {
+type DB = ReturnType<typeof connect>;
+function connect(dbUrl: string) {
     return drizzle(dbUrl, {
         schema: {
             ...eventsSchema,
@@ -17,14 +22,21 @@ async function connect(dbUrl: string) {
     });
 }
 
-function getDB(dbUrl: string) {
-    if (!db) {
-        db = connect(dbUrl);
-    }
+function getHandlers(dbUrl: string) {
+    const db = connect(dbUrl);
 
-    return db;
+    const eventsHandler = createEventsHandler(db);
+    const ticketsHandler = createTicketsHandler(db);
+    const postsHandler = createPostsHandler(db);
+    const commentsHandler = createCommentsHandler(db);
+
+    return {
+        eventsHandler,
+        ticketsHandler,
+        postsHandler,
+        commentsHandler
+    };
 }
 
-let db: null | ReturnType<typeof connect> = null;
 
-export { getDB };
+export { getHandlers, type DB };

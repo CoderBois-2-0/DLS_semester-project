@@ -1,9 +1,13 @@
-import { getDB } from '../index.js';
+import { type DB } from '../index.js';
 
-const db = await getDB();
+function createTicketsHandler(db: DB) {
+    const getTickets = async () => {
+        return db.query.ticketsTable.findMany();
+    }
 
-async function getTickets() {
-    return db.query.ticketsTable.findMany();
+    return {
+        getTickets
+    };
 }
 
-export { getTickets };
+export { createTicketsHandler };

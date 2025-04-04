@@ -1,6 +1,6 @@
 {
     "name": "@coderbois-2-0/qu-admin-organiser-db-api",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "",
     "repository": "https://github.com/CoderBois-2-0/DLS_queue-up",
     "main": "index.js",
@@ -13,7 +13,10 @@
         "lint": "prettier --config ../../.prettierrc --check .",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "drizzle-kit migrate",
-        "build": "tsc"
+        "build": "tsc",
+        "version:patch": "pnpm version patch --no-git-tag-version",
+        "version:minor": "pnpm version minor --no-git-tag-version",
+        "version:major": "pnpm version major --no-git-tag-version"
     },
     "keywords": [],
     "author": "",

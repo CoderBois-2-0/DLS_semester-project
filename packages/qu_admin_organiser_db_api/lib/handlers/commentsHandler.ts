@@ -1,9 +1,14 @@
-import { getDB } from '../index.js';
+import { type DB } from '../index.js';
 
-const db = await getDB();
+function createCommentsHandler(db: DB) {
+    const getComments = async () => {
+        return db.query.eventsTable.findMany();
+    };
 
-async function getEvents() {
-    return db.query.eventsTable.findMany();
+    return {
+        getComments
+    };
 }
 
-export { getEvents };
+
+export { createCommentsHandler };

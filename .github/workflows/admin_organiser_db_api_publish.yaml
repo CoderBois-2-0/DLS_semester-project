@@ -3,7 +3,7 @@ name: Publish admin organiser db api
 on:
   push:
     branches:
-      - BOIS-11/*
+      - main
     paths:
       - 'packages/qu_admin_organiser_db_api/**'
 

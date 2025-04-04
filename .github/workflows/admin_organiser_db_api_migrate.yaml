@@ -3,9 +3,9 @@ name: Migrate admin organiser db api schema files
 on:
   push:
     branches:
-      - BOIS-11/*
-#    paths:
-#      - 'packages/qu_admin_organiser_db_api/lib/schemas/*'
+      - *
+    paths:
+      - 'packages/qu_admin_organiser_db_api/lib/schemas/*'
 
 jobs:
   migrate:

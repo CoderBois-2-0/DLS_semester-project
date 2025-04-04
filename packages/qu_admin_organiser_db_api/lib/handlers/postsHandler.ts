@@ -1,9 +1,13 @@
-import { getDB } from '../index.js';
+import { type DB } from '../index.js';
 
-const db = await getDB();
+function createPostsHandler(db: DB) {
+    const getEvents = async () => {
+        return db.query.postsTable.findMany();
+    };
 
-async function getEvents() {
-    return db.query.postsTable.findMany();
+    return {
+        getEvents
+    };
 }
 
-export { getEvents };
+export { createPostsHandler };
