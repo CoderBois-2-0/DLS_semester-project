@@ -34,9 +34,8 @@ function getHandlers(dbUrl: string) {
         eventsHandler,
         ticketsHandler,
         postsHandler,
-        commentsHandler
+        commentsHandler,
     };
 }
-
 
 export { getHandlers, type DB };

@@ -6,9 +6,8 @@ function createCommentsHandler(db: DB) {
     };
 
     return {
-        getComments
+        getComments,
     };
 }
-
 
 export { createCommentsHandler };

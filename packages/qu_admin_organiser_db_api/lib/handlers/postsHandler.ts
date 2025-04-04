@@ -6,7 +6,7 @@ function createPostsHandler(db: DB) {
     };
 
     return {
-        getEvents
+        getEvents,
     };
 }
 
