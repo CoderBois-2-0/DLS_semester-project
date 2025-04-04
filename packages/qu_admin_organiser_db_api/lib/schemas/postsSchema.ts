@@ -12,10 +12,9 @@ const postsRelation = relations(postsTable, ({ many }) => {
     return {
         comments: many(commentsSchema.commentsTable),
         snapshots: many(postSnapshotsTable),
-        tombstones: many(postTombstonesTable)
+        tombstones: many(postTombstonesTable),
     };
 });
-
 
 const postSnapshotsTable = pgTable('post_snapshots', {
     id: varchar('id', { length: 128 }).primaryKey(),
@@ -30,11 +29,10 @@ const postSnapshotsRelation = relations(postSnapshotsTable, ({ one }) => {
     return {
         post: one(postsTable, {
             fields: [postSnapshotsTable.postId],
-            references: [postsTable.id]
-        })
+            references: [postsTable.id],
+        }),
     };
 });
-
 
 const postTombstonesTable = pgTable('post_tombstones', {
     id: varchar('id', { length: 128 }),
@@ -46,10 +44,16 @@ const postTombstonesRelation = relations(postTombstonesTable, ({ one }) => {
     return {
         post: one(postsTable, {
             fields: [postTombstonesTable.postId],
-            references: [postsTable.id]
-        })
+            references: [postsTable.id],
+        }),
     };
 });
 
-
-export { postsTable, postsRelation, postSnapshotsTable, postSnapshotsRelation, postTombstonesTable, postTombstonesRelation };
+export {
+    postsTable,
+    postsRelation,
+    postSnapshotsTable,
+    postSnapshotsRelation,
+    postTombstonesTable,
+    postTombstonesRelation,
+};

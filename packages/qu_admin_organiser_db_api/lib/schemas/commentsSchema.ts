@@ -16,10 +16,9 @@ const commentsRelation = relations(commentsTable, ({ one, many }) => {
             references: [postsSchema.postsTable.id],
         }),
         snapshots: many(commentSnapshotsTable),
-        tombstones: many(commentTombstonesTable)
+        tombstones: many(commentTombstonesTable),
     };
 });
-
 
 const commentSnapshotsTable = pgTable('comment_snapshots', {
     id: varchar('id', { length: 128 }).primaryKey(),
@@ -38,20 +37,29 @@ const commentSnapshotsRelation = relations(commentSnapshotsTable, ({ one }) => {
     };
 });
 
-
 const commentTombstonesTable = pgTable('comment_tombstones', {
     id: varchar('id', { length: 128 }).primaryKey(),
     commentId: varchar('comment_id', { length: 128 }).notNull(),
     deletedId: timestamp('deleted_id').notNull(),
 });
 
-const commentTombstonesRelation = relations(commentTombstonesTable, ({ one }) => {
-    return {
-        comment: one(commentsTable, {
-            fields: [commentTombstonesTable.commentId],
-            references: [commentsTable.id],
-        }),
-    };
-});
+const commentTombstonesRelation = relations(
+    commentTombstonesTable,
+    ({ one }) => {
+        return {
+            comment: one(commentsTable, {
+                fields: [commentTombstonesTable.commentId],
+                references: [commentsTable.id],
+            }),
+        };
+    }
+);
 
-export { commentsTable, commentsRelation, commentSnapshotsTable, commentSnapshotsRelation, commentTombstonesTable, commentTombstonesRelation };
+export {
+    commentsTable,
+    commentsRelation,
+    commentSnapshotsTable,
+    commentSnapshotsRelation,
+    commentTombstonesTable,
+    commentTombstonesRelation,
+};

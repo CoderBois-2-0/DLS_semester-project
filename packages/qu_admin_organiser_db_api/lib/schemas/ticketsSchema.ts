@@ -16,10 +16,9 @@ const ticketsRelation = relations(ticketsTable, ({ one, many }) => {
             references: [eventsSchema.eventsTable.id],
         }),
         snapshots: many(ticketSnapshotsTable),
-        tombstones: many(ticketTombstonesTable)
+        tombstones: many(ticketTombstonesTable),
     };
 });
-
 
 const ticketSnapshotsTable = pgTable('ticket_snapshots', {
     id: varchar('id', { length: 128 }).primaryKey(),
@@ -38,7 +37,6 @@ const ticketSnapshotsRelation = relations(ticketSnapshotsTable, ({ one }) => {
     };
 });
 
-
 const ticketTombstonesTable = pgTable('ticket_tombstones', {
     id: varchar('id', { length: 128 }).primaryKey(),
     ticketId: varchar('ticket_id', { length: 128 }).notNull(),
@@ -50,9 +48,15 @@ const ticketTombstonesRelation = relations(ticketTombstonesTable, ({ one }) => {
         event: one(ticketsTable, {
             fields: [ticketTombstonesTable.ticketId],
             references: [ticketsTable.id],
-        })
+        }),
     };
 });
 
-
-export { ticketsTable, ticketsRelation, ticketSnapshotsTable, ticketSnapshotsRelation, ticketTombstonesTable, ticketTombstonesRelation };
+export {
+    ticketsTable,
+    ticketsRelation,
+    ticketSnapshotsTable,
+    ticketSnapshotsRelation,
+    ticketTombstonesTable,
+    ticketTombstonesRelation,
+};

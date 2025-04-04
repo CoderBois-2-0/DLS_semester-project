@@ -16,7 +16,6 @@ const eventsRelation = relations(eventsTable, ({ many }) => {
     };
 });
 
-
 const eventSnapshotsTable = pgTable('event_snapshots', {
     id: varchar('id', { length: 128 }).primaryKey(),
     name: varchar('name', { length: 10 }).notNull(),
@@ -25,18 +24,17 @@ const eventSnapshotsTable = pgTable('event_snapshots', {
     userUsername: varchar('user_username', { length: 10 }).notNull(),
     location: varchar('location', { length: 50 }),
     updatedAt: timestamp('updated_at').notNull(),
-    eventsId: varchar('event_id', { length: 128 }).notNull()
+    eventsId: varchar('event_id', { length: 128 }).notNull(),
 });
 
 const eventSnapshotsRelation = relations(eventSnapshotsTable, ({ one }) => {
     return {
         event: one(eventsTable, {
             fields: [eventSnapshotsTable.eventsId],
-            references: [eventsTable.id]
-        })
+            references: [eventsTable.id],
+        }),
     };
 });
-
 
 const eventTombstonesTable = pgTable('event_tombstones', {
     id: varchar('id', { length: 128 }).primaryKey(),
@@ -48,10 +46,16 @@ const eventsTombstonesRelation = relations(eventTombstonesTable, ({ one }) => {
     return {
         event: one(eventsTable, {
             fields: [eventTombstonesTable.eventsId],
-            references: [eventsTable.id]
-        })
+            references: [eventsTable.id],
+        }),
     };
 });
 
-
-export { eventsTable, eventsRelation, eventSnapshotsTable, eventSnapshotsRelation, eventTombstonesTable, eventsTombstonesRelation };
+export {
+    eventsTable,
+    eventsRelation,
+    eventSnapshotsTable,
+    eventSnapshotsRelation,
+    eventTombstonesTable,
+    eventsTombstonesRelation,
+};
