@@ -1,7 +1,9 @@
 import { defineConfig } from 'drizzle-kit';
 
-const DB_URL = process.env.DB_URL ?? 'No Database Url';
-
+if (!process.env.DB_URL) {
+    throw new Error('Database URL is not set. Please set the DB_URL environment variable.');
+}
+const DB_URL = process.env.DB_URL;
 export default defineConfig({
     dialect: 'postgresql',
     schema: './lib/schemas/*Schema.ts',
