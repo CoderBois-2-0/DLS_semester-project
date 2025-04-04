@@ -3,7 +3,7 @@ name: Migrate admin organiser db api schema files
 on:
   push:
     branches:
-      - *
+      - '**'
     paths:
       - 'packages/qu_admin_organiser_db_api/lib/schemas/*'
 
