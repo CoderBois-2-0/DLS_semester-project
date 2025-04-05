@@ -5,55 +5,31 @@ metadata:
 
 ---
 
-apiVersion: v1
-kind: Service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
 metadata:
-  name: qu-authenticator-db-service
-  namespace: qu-authenticator
+  name: qu-authenticator-allow-db-host
+  namespace: qu-admin-organiser-backend
 spec:
-  clusterIP: None
-  selector:
-    app: qu-authenticator-db-service
-
----
-
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: qu-authenticator-db-stateful-set
-  namespace: qu-authenticator
-spec:
-  serviceName: qu-authenticator-db-service
-  replicas: 3
-  selector:
+  podSelector:
     matchLabels:
-      app: qu-authenticator-db-stateful-set
-  template:
-    metadata:
-      labels:
-        app: qu-authenticator-db-stateful-set
-    spec:
-      containers:
-      - name: mongodb
-        image: mongo:8.0
-        command:
-          - "mongod"
-          - "--replSet"
-          - "rs1"
-          - "--bind_ip_all"
-        ports:
-        - containerPort: 27017
-        volumeMounts:
-        - name: qu-authenticator-db-storage
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: qu-authenticator-db-storage
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi
+      app: qu-authenticator-api-deployment
+  ingress:
+    # beware that this cidr should be machine specific in a prod setting
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+      ports:
+        - protocol: TCP
+          port: 3000
+  egress:
+    # beware that this cidr should be machine specific in a prod setting
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+      ports:
+        - protocol: TCP
+          port: 3000
 
 ---
 

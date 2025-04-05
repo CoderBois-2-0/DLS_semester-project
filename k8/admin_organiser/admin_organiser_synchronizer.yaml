@@ -8,28 +8,35 @@ metadata:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: qu-admin-organiser-allow-db-message-broker
+  name: qu-synchronizer-allow-db-message-broker
   namespace: qu-admin-organiser-synchronizer-api
 spec:
   podSelector:
     matchLabels:
       app: qu-admin-organiser-synchronizer-api-deployment
   ingress:
+    # beware that this cidr should be machine specific in a prod setting
     - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: qu-admin-organiser-db
+        - ipBlock:
+            cidr: 0.0.0.0/0
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: qu-admin-organiser-message-broker
+      ports:
+        - protocol: TCP
+          port: 5173
+        - protocol: TCP
+          port: 5672
   egress:
     - to:
       - namespaceSelector:
           matchLabels:
-            kubernetes.io/metadata.name: qu-admin-organiser-db
-      - namespaceSelector:
-          matchLabels:
             kubernetes.io/metadata.name: qu-admin-organiser-message-broker
+      ports:
+        - protocol: TCP
+          port: 5173
+        - protocol: TCP
+          port: 5672
 
 ---
 
