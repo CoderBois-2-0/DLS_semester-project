@@ -13,7 +13,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: qu-rabbitmq
+      app: qu-rabbitmq-deployment
   ingress:
     - from:
         - namespaceSelector:
@@ -22,6 +22,9 @@ spec:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: qu-guest-synchronizer
+      ports:
+        - protocol: TCP
+          port: 5672
   egress:
     - to:
       - namespaceSelector:
@@ -30,13 +33,18 @@ spec:
       - namespaceSelector:
           matchLabels:
             kubernetes.io/metadata.name: qu-guest-synchronizer
+      ports:
+        - protocol: TCP
+          port: 5672
+        - protocol: TCP
+          port: 15672
 
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: qu-rabbitmq
+  name: qu-rabbitmq-deployment
   namespace: qu-message-broker
 spec:
   replicas: 1
@@ -73,18 +81,17 @@ spec:
 
 ---
 
-# expose management to host
 apiVersion: v1
 kind: Service
 metadata:
   name: qu-message-broker-management-service
   namespace: qu-message-broker
 spec:
-  type: NodePort  # Exposes the service on a port accessible outside the cluster
+  type: NodePort
   selector:
-    app: qu-message-broker-deployment  # Must match the labels in your Deployment
+    app: qu-message-broker-deployment
   ports:
     - protocol: TCP
-      port: 15672      # The port exposed inside the cluster
-      targetPort: 15672  # The container's port (update as needed)
-      nodePort: 30600  # Static port on the node (choose any available port)
+      port: 15672
+      targetPort: 15672
+      nodePort: 30600

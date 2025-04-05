@@ -15,27 +15,16 @@ spec:
     matchLabels:
       app: qu-admin-organiser-backend-deployment
   ingress:
+    # beware that this cidr should be machine specific in a prod setting
     - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: qu-admin-organiser-db
-      ports:
-        - protocol: TCP
-          port: 3306
-    - from:
-      - ipBlock:
-          cidr: 0.0.0.0/0
+        - ipBlock:
+            cidr: 0.0.0.0/0
       ports:
         - protocol: TCP
           port: 3000
-  egress:
-    - to:
-      - namespaceSelector:
-          matchLabels:
-            kubernetes.io/metadata.name: qu-admin-organiser-db
-      ports:
         - protocol: TCP
-          port: 3306
+          port: 5672
+  egress:
     # beware that this cidr should be machine specific in a prod setting
     - to:
       - ipBlock:
@@ -43,6 +32,8 @@ spec:
       ports:
         - protocol: TCP
           port: 3000
+        - protocol: TCP
+          port: 5672
 
 
 ---
@@ -53,14 +44,14 @@ metadata:
   name: qu-admin-organiser-backend-service
   namespace: qu-admin-organiser-backend
 spec:
+  type: NodePort
   selector:
-    app: qu-admin-organiser-backend-deployment  # Must match the labels in your Deployment
+    app: qu-admin-organiser-backend-deployment
   ports:
     - protocol: TCP
-      port: 3000      # The port exposed inside the cluster
-      targetPort: 3000  # The container's port (update as needed)
-      nodePort: 30100  # Static port on the node (choose any available port)
-  type: NodePort  # Exposes the service on a port accessible outside the cluster
+      port: 3000
+      targetPort: 3000
+      nodePort: 30100
 
 ---
 
