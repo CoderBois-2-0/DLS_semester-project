@@ -1,0 +1,11 @@
+gum log -l info "Running format and linting"
+
+pnpm format
+pnpm lint
+
+CHANGED_FILES=$(git diff --name-only)
+
+if echo "$CHANGED_FILES" | grep -q -E "packages/qu_admin_organiser_db_api/lib/schemas/.+Schema"; then
+    gum log -l info "Admin organiser schema files have been changes, generating migration files"
+    pnpm --filter @coderbois-2-0/qu-admin-organiser-db-api db:generate
+fi

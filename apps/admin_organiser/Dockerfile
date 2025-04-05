@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM qu-node:latest AS base
 
 FROM base AS builder
 
@@ -35,7 +35,7 @@ COPY --from=builder --chown=hono:nodejs /prod/qu_admin_organiser_backend/package
 USER hono
 EXPOSE 3000
 
-CMD ["node", "/app/dist/index.js"]
+CMD ["node", "./dist/index.js"]
 
 
 # frontend
@@ -63,4 +63,4 @@ COPY --from=builder --chown=hono:nodejs /prod/qu_admin_organiser_synchronizer_ap
 USER hono
 EXPOSE 3000
 
-CMD ["node", "/app/dist/index.js"]
+CMD ["node", "./dist/index.js"]
