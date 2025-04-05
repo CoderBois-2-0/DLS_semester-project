@@ -1,0 +1,39 @@
+name: Migrate admin organiser db api schema files
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'packages/qu_admin_organiser_db_api/lib/schemas/*'
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    env:
+      DB_URL: ${{ secrets.DB_URL }}
+      PACKAGE: '@coderbois-2-0/qu-admin-organiser-db-api'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm --filter $PACKAGE install
+      
+      - name: Migrate using migration files
+        run: pnpm --filter $PACKAGE db:migrate

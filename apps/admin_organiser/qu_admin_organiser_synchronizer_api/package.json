@@ -10,7 +10,8 @@
     "dependencies": {
         "@hono/node-server": "^1.13.8",
         "hono": "^4.7.4",
-        "@queue-up/message-broker": "workspace:message-broker@*"
+        "@queue-up/message-broker": "workspace:message-broker@*",
+        "@queue-up/db-api": "workspace:@coderbois-2-0/qu-admin-organiser-db-api@*"
     },
     "devDependencies": {
         "@types/node": "^20.11.17",

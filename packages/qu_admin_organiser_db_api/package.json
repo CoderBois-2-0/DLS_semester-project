@@ -1,0 +1,35 @@
+{
+    "name": "@coderbois-2-0/qu-admin-organiser-db-api",
+    "version": "2.0.0",
+    "description": "",
+    "repository": "https://github.com/CoderBois-2-0/DLS_queue-up",
+    "main": "index.js",
+    "type": "module",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
+    "scripts": {
+        "format": "prettier --config ../../.prettierrc --write .",
+        "lint": "prettier --config ../../.prettierrc --check .",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate": "drizzle-kit migrate",
+        "build": "tsc",
+        "version:patch": "pnpm version patch --no-git-tag-version",
+        "version:minor": "pnpm version minor --no-git-tag-version",
+        "version:major": "pnpm version major --no-git-tag-version"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.4.1",
+    "dependencies": {
+        "@neondatabase/serverless": "^1.0.0",
+        "drizzle-orm": "^0.41.0",
+        "pg": "^8.14.1"
+    },
+    "devDependencies": {
+        "@types/node": "^20.17.23",
+        "drizzle-kit": "^0.30.6",
+        "typescript": "^5.8.2"
+    }
+}

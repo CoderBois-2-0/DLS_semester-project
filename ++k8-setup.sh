@@ -1,10 +1,5 @@
 #!/bin/bash
 
-function create_cluster() {
-    gum log -l info "Creating k8 Cluster"
-    kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster already exists"
-}
-
 function build_admin_organiser() {
 
     if [[ $build_images == 'Yes' ]]
@@ -61,9 +56,18 @@ build_options=("Yes" "No" )
 choice=$(gum choose "${options[@]}" --header "Which part of the system do you wish to run?")
 build_images=$(gum choose "${build_options[@]}" --header "Build docker images?")
 
+gum log -l info "Creating k8 Cluster"
+kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster already exists"
+
+if [[ $build_images == 'Yes' ]]
+then
+    gum log -l info "Building node image"
+
+    docker buildx build -t qu-node:latest .
+fi
+
 case "$choice" in
     All)
-        create_cluster
         build_admin_organiser
         build_guest
         build_authenticator
@@ -72,7 +76,6 @@ case "$choice" in
         kubectl apply -f k8 -R
         ;;
     Admin/Organiser)
-        create_cluster
         build_admin_organiser
         build_authenticator
 
@@ -81,7 +84,6 @@ case "$choice" in
         ./+admin-organiser-setup.sh
         ;;
     Guest)
-        create_cluster
         build_guest
         build_authenticator
 

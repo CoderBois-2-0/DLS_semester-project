@@ -3,9 +3,9 @@ name: Publish admin organiser db api
 on:
   push:
     branches:
-      - BOIS-11/*
-#    paths:
-#      - 'packages/qu_admin_organiser_db_api/**'
+      - main
+    paths:
+      - 'packages/qu_admin_organiser_db_api/**'
 
 jobs:
   publish:
@@ -16,20 +16,22 @@ jobs:
       id-token: write
     env:
       PACKAGE: '@coderbois-2-0/qu-admin-organiser-db-api'
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: 'https://npm.pkg.github.com'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm --filter $PACKAGE install
