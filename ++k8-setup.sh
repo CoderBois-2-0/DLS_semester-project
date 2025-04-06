@@ -59,6 +59,10 @@ build_images=$(gum choose "${build_options[@]}" --header "Build docker images?")
 gum log -l info "Creating k8 Cluster"
 kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster already exists"
 
+# setup secrets manager
+helm upgrade sm-operator bitwarden/sm-operator -i --debug -n sm-operator-system --create-namespace --values sm-values.yaml --devel
+kubectl create secret generic bw-auth-token --from-literal=token="$BW_TOKEN"
+
 if [[ $build_images == 'Yes' ]]
 then
     gum log -l info "Building node image"
