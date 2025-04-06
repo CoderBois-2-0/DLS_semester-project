@@ -23,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/amqplib": "^0.10.4",
     "@types/node": "^20.17.23",
     "typescript": "^5.8.2"
   },
