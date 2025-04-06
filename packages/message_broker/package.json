@@ -1,25 +1,32 @@
 {
-    "name": "message-broker",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "type": "module",
-    "scripts": {
-        "format": "prettier --config ../../.prettierrc --write .",
-        "lint": "prettier --config ../../.prettierrc --check .",
-        "build": "tsc"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "packageManager": "pnpm@10.4.1",
-    "dependencies": {
-        "@types/amqplib": "^0.10.7",
-        "amqplib": "^0.10.5",
-        "install": "^0.13.0"
-    },
-    "devDependencies": {
-        "@types/node": "^20.11.17",
-        "typescript": "^5.8.2"
-    }
+  "name": "@coderbois-2-0/message-broker",
+  "version": "1.0.0",
+  "description": "Message broker for inter-service communication",
+  "repository": "https://github.com/CoderBois-2-0/DLS_queue-up",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "build": "pnpm exec tsc",
+    "prepublishOnly": "npm run build",
+    "version:patch": "pnpm version patch --no-git-tag-version",
+    "version:minor": "pnpm version minor --no-git-tag-version",
+    "version:major": "pnpm version major --no-git-tag-version"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.17.23",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.7"
+  }
 }
