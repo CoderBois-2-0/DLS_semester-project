@@ -59,6 +59,8 @@ build_images=$(gum choose "${build_options[@]}" --header "Build docker images?")
 gum log -l info "Creating k8 Cluster"
 kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster already exists"
 
+kubectl apply -f k8/namespace.yaml
+
 if [[ $build_images == 'Yes' ]]
 then
     gum log -l info "Building node image"
