@@ -1,19 +1,17 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: qu-authenticator
-
----
-
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: qu-authenticator-allow-db-host
-  namespace: qu-admin-organiser-backend
+  namespace: queue-up
+  name: authenticator-allow-host
+  labels:
+    app: authenticator
+    component: policy
+    policy-type: both
 spec:
   podSelector:
     matchLabels:
-      app: qu-authenticator-api-deployment
+      app: authenticator
+      component: api
   ingress:
     # beware that this cidr should be machine specific in a prod setting
     - from:
@@ -36,17 +34,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: qu-authenticator-api-deployment
-  namespace: qu-authenticator
+  namespace: queue-up
+  name: authenticator-api
+  labels:
+    app: authenticator
+    component: api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: qu-authenticator-api-deployment
+      app: authenticator
+      component: api
   template:
     metadata:
       labels:
-        app: qu-authenticator-api-deployment
+        app: authenticator
+        component: api
     spec:
       containers:
         - name: authenticator-api
@@ -60,14 +63,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: qu-authenticator-api-service
-  namespace: qu-authenticator
+  namespace: queue-up
+  name: authenticator-api-exposer
+  labels:
+    app: authenticator
+    component: exposer
+    exposer-source: api
+    exposer-target: host
 spec:
+  type: NodePort
   selector:
-    app: qu-authenticator-api-deployment  # Must match the labels in your Deployment
+    app: authenticator
+    component: api
   ports:
     - protocol: TCP
-      port: 5000      # The port exposed inside the cluster
-      targetPort: 3000  # The container's port (update as needed)
-      nodePort: 30500  # Static port on the node (choose any available port)
-  type: NodePort  # Exposes the service on a port accessible outside the cluster
+      port: 5000
+      targetPort: 3000
+      nodePort: 30500

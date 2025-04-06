@@ -1,32 +1,28 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: qu-guest-synchronizer-api
-
----
-
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: qu-guest-allow-db
-  namespace: qu-guest-synchronizer-api
+  namespace: queue-up
+  name: guest-synchronizer-allow-db
+  labels:
+    app: guest-synchronizer
+    component: policy
+    policy-type: both
 spec:
   podSelector:
     matchLabels:
-      app: qu-guest-synchronizer-deployment
+      app: guest-synchronizer
+      component: api
   ingress:
     - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: qu-guest-db
+      - ipBlock:
+          cidr: 0.0.0.0/0
       ports:
         - protocol: TCP
           port: 27017
   egress:
     - to:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: qu-guest-db
+      - ipBlock:
+          cidr: 0.0.0.0/0
       ports:
         - protocol: TCP
           port: 27017
@@ -36,8 +32,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: qu-guest-synchronizer-api-service
-  namespace: qu-guest-synchronizer-api
+  namespace: queue-up
+  name: guest-synchronizer-api-exposer
+  labels:
+    app: guest-synchronizer
+    component: exposer
+    exposer-source: api
+    exposer-target: cluster
 spec:
   type: ClusterIP
   selector:
@@ -52,17 +53,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: qu-guest-synchronizer-api-deployment
-  namespace: qu-guest-synchronizer-api
+  namespace: queue-up
+  name: guest-synchronizer-api
+  labels:
+    app: guest-synchronizer
+    component: api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: qu-guest-synchronizer-api
+      app: guest-synchronizer
+      component: api
   template:
     metadata:
       labels:
-        app: qu-guest-synchronizer-api
+        app: guest-synchronizer
+        component: api
     spec:
       containers:
         - name: guest-synchronizer-api
