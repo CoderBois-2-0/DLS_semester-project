@@ -63,6 +63,8 @@ kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster a
 helm upgrade sm-operator bitwarden/sm-operator -i --debug -n sm-operator-system --create-namespace --values ./k8/sm-values.yaml --devel
 kubectl create secret generic bw-auth-token --from-literal=token="$BW_TOKEN"
 
+kubectl apply -f k8/namespace.yaml
+
 if [[ $build_images == 'Yes' ]]
 then
     gum log -l info "Building node image"
