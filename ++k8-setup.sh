@@ -6,7 +6,7 @@ function build_admin_organiser() {
     then
         gum log -l info "Building admin organiser"
 
-        docker buildx build -f ./apps/admin_organiser/Dockerfile --target qu_admin_organiser_backend -t qu-admin-organiser-backend:latest .
+        docker buildx build -f ./apps/admin_organiser/Dockerfile --target qu_admin_organiser_backend -t qu-admin-organiser-backend:latest --secret id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN .
         docker buildx build -f ./apps/admin_organiser/Dockerfile --target qu_admin_organiser_frontend -t qu-admin-organiser-frontend:latest .
         docker buildx build -f ./apps/admin_organiser/Dockerfile --target qu_admin_organiser_synchronizer_api -t qu-admin-organiser-synchronizer-api:latest .
     fi
@@ -59,17 +59,20 @@ build_images=$(gum choose "${build_options[@]}" --header "Build docker images?")
 gum log -l info "Creating k8 Cluster"
 kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster already exists"
 
-# setup secrets manager
-helm upgrade sm-operator bitwarden/sm-operator -i --debug -n sm-operator-system --create-namespace --values ./k8/sm-values.yaml --devel
-kubectl create secret generic bw-auth-token --from-literal=token="$BW_TOKEN"
-
 kubectl apply -f k8/namespace.yaml
+
+# setup secrets manager
+gum log -l info 'Setting up secrets manager'
+helm upgrade sm-operator bitwarden/sm-operator -i --debug -n queue-up --values ./k8/secrets_manager/secrets_manager_values.yaml --devel
+kubectl create secret generic bw-auth-token --from-literal=token="$BW_TOKEN"
+kubectl apply -f k8/secrets_manager/secrets_manager.yaml
+
 
 if [[ $build_images == 'Yes' ]]
 then
     gum log -l info "Building node image"
 
-    docker buildx build -t qu-node:latest .
+    docker buildx build --secret id=QUEUE_UP_REG_TOKEN -t qu-node:latest .
 fi
 
 case "$choice" in

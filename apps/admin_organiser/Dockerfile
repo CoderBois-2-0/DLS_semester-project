@@ -6,6 +6,8 @@ RUN apk add --no-cache gcompat
 RUN apk add bash
 RUN apk add pnpm
 
+RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN
+
 WORKDIR /app
 COPY . .
 
@@ -22,6 +24,7 @@ RUN pnpm deploy --filter=qu_admin_organiser_synchronizer_api --prod /prod/qu_adm
 
 # backend
 FROM base AS qu_admin_organiser_backend
+
 WORKDIR /app
 
 RUN addgroup --system --gid 1001 nodejs
