@@ -1,0 +1,46 @@
+name: qu_message_broker
+
+on:
+  push:
+    paths:
+      - 'packages/message_broker/**'
+    branches:
+      - main
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@coderbois-2-0'
+          cache: 'pnpm'
+      
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.4.1
+      
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Build message-broker
+        run: |
+          cd packages/message_broker
+          pnpm build
+      
+      - name: Publish to GitHub Packages
+        run: |
+          cd packages/message_broker
+          pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

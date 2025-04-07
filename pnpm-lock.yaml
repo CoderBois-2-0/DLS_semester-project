@@ -209,6 +209,9 @@ importers:
         specifier: ^0.10.7
         version: 0.10.7
     devDependencies:
+      '@types/amqplib':
+        specifier: ^0.10.4
+        version: 0.10.7
       '@types/node':
         specifier: ^20.17.23
         version: 20.17.23
@@ -1041,6 +1044,9 @@ packages:
   '@tanstack/virtual-file-routes@1.99.0':
     resolution: {integrity: sha512-XvX8bfdo4CYiCW+ItVdBfCorh3PwQFqYqd7ll+XKWiWOJpqUGIG7VlziVavARZpUySiY2VBlHadiUYS7jhgjRg==}
     engines: {node: '>=12'}
+
+  '@types/amqplib@0.10.7':
+    resolution: {integrity: sha512-IVj3avf9AQd2nXCx0PGk/OYq7VmHiyNxWFSb5HhU9ATh+i+gHWvVcljFTcTWQ/dyHJCTrzCixde+r/asL2ErDA==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -3079,6 +3085,10 @@ snapshots:
   '@tanstack/store@0.7.0': {}
 
   '@tanstack/virtual-file-routes@1.99.0': {}
+
+  '@types/amqplib@0.10.7':
+    dependencies:
+      '@types/node': 20.17.23
 
   '@types/babel__core@7.20.5':
     dependencies:
