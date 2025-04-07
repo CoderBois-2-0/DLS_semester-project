@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
-        "declaration": true,
-        "target": "ESNext",
-        "module": "NodeNext",
-        "strict": true,
-        "verbatimModuleSyntax": true,
-        "skipLibCheck": true,
-        "types": ["node"],
-        "outDir": "./dist"
+      "target": "ES2022",
+      "module": "NodeNext",
+      "moduleResolution": "NodeNext",
+      "declaration": true,
+      "outDir": "./dist",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "skipLibCheck": true
     },
-    "include": ["lib/**/*"],
-    "exclude": ["node_modules"]
-}
+    "include": ["index.ts", "lib/**/*"],
+    "exclude": ["node_modules", "dist"]
+  }
