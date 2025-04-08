@@ -89,9 +89,9 @@ spec:
             - secretRef:
                 name: secrets-manager
           env:
-            - name: QUEUE_UP_REG_TOKEN
+            - name: DB_URL
               valueFrom:
                 secretKeyRef:
                   name: secrets-manager
-                  key: registry-token
+                  key: sm-admin-organiser-db-url
 
