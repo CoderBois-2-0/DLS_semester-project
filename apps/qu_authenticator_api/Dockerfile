@@ -11,7 +11,6 @@ WORKDIR /app
 COPY . .
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter qu_authenticator_api install --frozen-lockfile
-RUN pnpm --filter qu_authenticator_api build
 
 RUN pnpm deploy --filter=qu_authenticator_api --prod /prod/qu_authenticator_api
 

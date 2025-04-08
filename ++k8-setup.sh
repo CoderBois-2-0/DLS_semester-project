@@ -6,9 +6,7 @@ function build_admin_organiser() {
     then
         gum log -l info "Building admin organiser"
 
-        docker buildx build -f ./apps/admin_organiser/Dockerfile --target qu_admin_organiser_backend -t qu-admin-organiser-backend:latest .
-        docker buildx build -f ./apps/admin_organiser/Dockerfile --target qu_admin_organiser_frontend -t qu-admin-organiser-frontend:latest .
-        docker buildx build -f ./apps/admin_organiser/Dockerfile --target qu_admin_organiser_synchronizer_api -t qu-admin-organiser-synchronizer-api:latest .
+        docker buildx bake admin-organiser
     fi
 
     gum log -l info "Loading admin organiser images into kind"
@@ -24,9 +22,7 @@ function build_guest() {
     then
         gum log -l info "Building guest"
 
-        docker buildx build -f ./apps/guest/Dockerfile --target qu_guest_backend -t qu-guest-backend:latest .
-        docker buildx build -f ./apps/guest/Dockerfile --target qu_guest_frontend -t qu-guest-frontend:latest .
-        docker buildx build -f ./apps/guest/Dockerfile --target qu_guest_synchronizer_api -t qu-guest-synchronizer-api:latest .
+        docker buildx bake guest
     fi
 
     gum log -l info "Loading guest images into kind"
@@ -41,7 +37,7 @@ function build_authenticator() {
     then
         gum log -l info "Building authenticator"
 
-        docker buildx build -f ./apps/qu_authenticator_api/Dockerfile --target qu_authenticator_api -t qu-authenticator-api:latest .
+        docker buildx bake qu_authenticator_api
     fi
 
     gum log -l info "Loading authenticator images into kind"
@@ -61,11 +57,18 @@ kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster a
 
 kubectl apply -f k8/namespace.yaml
 
+# setup secrets manager
+gum log -l info 'Setting up secrets manager'
+helm upgrade sm-operator bitwarden/sm-operator -i --debug -n queue-up --values ./secrets_manager_values.yaml --devel
+kubectl create secret generic bw-auth-token -n queue-up --from-literal=token="$BW_TOKEN"
+kubectl apply -f k8/secrets_manager.yaml
+
+
 if [[ $build_images == 'Yes' ]]
 then
     gum log -l info "Building node image"
 
-    docker buildx build -t qu-node:latest .
+    docker buildx bake qu_node
 fi
 
 case "$choice" in

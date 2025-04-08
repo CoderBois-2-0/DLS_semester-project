@@ -5,9 +5,10 @@ k8
 .gitignore
 kind.config.yaml
 
-node_modules
 Dockerfile
+node_modules
 README.md
 .env.example
+dist
 
 .vscode
