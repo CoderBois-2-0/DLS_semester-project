@@ -2,6 +2,10 @@ kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
   - role: control-plane
+    # used to persist grafana between start ups
+    extraMounts:
+      - hostPath: ~/grafana
+        containerPath: /grafana
     extraPortMappings:
       # admin organiser backend
       - containerPort: 30100
@@ -21,4 +25,7 @@ nodes:
       # rabbitmq service
       - containerPort: 30600
         hostPort: 15672
+      # grafana
+      - containerPort: 30700
+        hostPort: 3001
   - role: worker
