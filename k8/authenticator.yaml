@@ -57,6 +57,15 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: secrets-manager
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-manager
+                  key: sm-authenticator-db-url
 
 ---
 

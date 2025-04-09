@@ -9,7 +9,9 @@
     },
     "dependencies": {
         "@hono/node-server": "^1.13.8",
-        "hono": "^4.7.4"
+        "argon2": "^0.41.1",
+        "hono": "^4.7.4",
+        "mongodb": "^6.15.0"
     },
     "devDependencies": {
         "@types/node": "^20.11.17",
