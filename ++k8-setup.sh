@@ -6,7 +6,7 @@ function build_admin_organiser() {
     then
         gum log -l info "Building admin organiser"
 
-        docker buildx bake admin-organiser
+        docker buildx bake admin_organiser
     fi
 
     gum log -l info "Loading admin organiser images into kind"
