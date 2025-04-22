@@ -9,13 +9,14 @@ RUN apk add pnpm
 WORKDIR /app
 COPY . .
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter qu_admin_organiser_* install --frozen-lockfile
-RUN pnpm --filter qu_admin_organiser_* build
+# Use secret mount for npm registry authentication
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc --mount=type=cache,id=pnpm,target=/pnpm/store pnpm --filter qu_admin_organiser_* install --frozen-lockfile
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc pnpm --filter qu_admin_organiser_* build
 
-# admin organiser
-RUN pnpm deploy --filter=qu_admin_organiser_backend --prod /prod/qu_admin_organiser_backend
-RUN pnpm deploy --filter=qu_admin_organiser_frontend --prod /prod/qu_admin_organiser_frontend
-RUN pnpm deploy --filter=qu_admin_organiser_synchronizer_api --prod /prod/qu_admin_organiser_synchronizer_api
+# admin organiser with secret mount for npm registry authentication
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc pnpm deploy --filter=qu_admin_organiser_backend --prod /prod/qu_admin_organiser_backend
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc pnpm deploy --filter=qu_admin_organiser_frontend --prod /prod/qu_admin_organiser_frontend
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc pnpm deploy --filter=qu_admin_organiser_synchronizer_api --prod /prod/qu_admin_organiser_synchronizer_api
 
 
 # RUNNERS
