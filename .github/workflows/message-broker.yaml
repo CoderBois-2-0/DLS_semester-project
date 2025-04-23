@@ -14,6 +14,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
     env:
       QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PACKAGE: '@coderbois-2-0/message-broker'
