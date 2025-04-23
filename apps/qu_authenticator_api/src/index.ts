@@ -12,18 +12,23 @@ app.get('/', (c) => {
 app.get('/users', async (c) => {
     const users = await usersHandler.getUsers();
 
-    return c.json({ data: users })
+    return c.json({ data: users });
 });
 
 app.get('/users/:username', async (c) => {
     const userUsername = c.req.param('username');
     const user = await usersHandler.findUser(userUsername);
 
-    return c.json({ data: user })
+    return c.json({ data: user });
 });
 
 app.post('/users', async (c) => {
-    const user = usersHandler.createUser({ username: 'Foo', email: 'foo@example.com', password: 'foo', role: 'GUEST' });
+    const user = usersHandler.createUser({
+        username: 'Foo',
+        email: 'foo@example.com',
+        password: 'foo',
+        role: 'GUEST',
+    });
 
     return c.json({ data: user });
 });

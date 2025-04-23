@@ -25,7 +25,9 @@ async function findUser(username: string) {
     return usersCollection.find({ username }).toArray();
 }
 
-async function createUser(newUser: Omit<TUser, '_id'>): Promise<Omit<TUser, 'password'>> {
+async function createUser(
+    newUser: Omit<TUser, '_id'>
+): Promise<Omit<TUser, 'password'>> {
     const hashedPassword = await argon2.hash(newUser.password);
     const user: Omit<TUser, '_id'> = { ...newUser, password: hashedPassword };
 
