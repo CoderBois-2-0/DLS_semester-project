@@ -34,7 +34,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm --filter $PACKAGE install
+        run: pnpm --filter $PACKAGE install --frozen-lockfile
 
       - name: Build package
         run: pnpm --filter $PACKAGE build

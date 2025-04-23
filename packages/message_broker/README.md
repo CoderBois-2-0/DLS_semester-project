@@ -1,3 +1,3 @@
 # packages er cringe når de virker men vi ikke ved hvorfor eller hvordan?!
 
-# Cell got mad a piccolo for killing vegeta and blew himself up with the earth, Gohan did not manage to stop him. Sad...
+# Bulma yelled at Goku for being a bad dad... Goten cried
