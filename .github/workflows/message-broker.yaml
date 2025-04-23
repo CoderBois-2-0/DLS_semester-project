@@ -15,7 +15,7 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PNPM
         uses: pnpm/action-setup@v2
@@ -31,17 +31,17 @@ jobs:
           cache: 'pnpm'
       
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm --filter $PACKAGE install
       
       - name: Build message-broker
         run: |
           cd packages/message_broker
-          pnpm build
+          pnpm --filter $PACKAGE build
       
       - name: Publish to GitHub Packages
         run: |
           cd packages/message_broker
-          pnpm publish --no-git-checks
+          pnpm publish --filter $PACKAGE --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGE: '@coderbois-2-0/message-broker'
