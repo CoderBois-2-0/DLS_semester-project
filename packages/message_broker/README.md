@@ -1,3 +1,3 @@
 # packages er cringe når de virker men vi ikke ved hvorfor eller hvordan?!
 
-# piccolo used SPECIAL BEAM CANNON on vegeta, vegeta died.
+# Cell got mad a piccolo for killing vegeta and blew himself up with the earth, Gohan did not manage to stop him. Sad...

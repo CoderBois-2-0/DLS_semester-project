@@ -16,7 +16,7 @@ jobs:
       packages: write
       id-token: write
     env:
-      QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
       PACKAGE: '@coderbois-2-0/message-broker'
     steps:
       - uses: actions/checkout@v4
