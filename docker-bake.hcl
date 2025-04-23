@@ -21,7 +21,7 @@ group "guest" {
 target "qu_node" {
     dockerfile = "./Dockerfile"
     context = "."
-    tags = ["qu_node:latest"]
+    tags = ["qu-node:latest"]
 }
 
 target "qu_authenticator_api" {
@@ -48,7 +48,7 @@ target "qu_admin_organiser_frontend" {
 target "qu_admin_organiser_synchronizer_api" {
     dockerfile = "./apps/admin_organiser/qu_admin_organiser_synchronizer_api/Dockerfile"
     context = "."
-    tags = ["qu-admin-organiser-synchronizer:latest"]
+    tags = ["qu-admin-organiser-synchronizer-api:latest"]
     secret = [
         { type = "env", id = "QUEUE_UP_REG_TOKEN" }
     ]

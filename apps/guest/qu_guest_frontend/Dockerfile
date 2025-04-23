@@ -4,7 +4,12 @@ FROM base AS builder
 WORKDIR /app
 COPY . .
 
-RUN pnpm deploy --filter=qu_guest_frontend --prod /prod/guest_frontend
+RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
+    --mount=type=cache,id=pnpm,target=/pnpm-store \
+    pnpm install --frozen-lockfile
+RUN pnpm build
+RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
+    pnpm deploy --filter=qu_guest_frontend --prod /prod/guest_frontend
 
 
 FROM nginx:alpine3.21 AS qu_guest_frontend

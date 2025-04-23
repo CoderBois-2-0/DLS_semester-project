@@ -4,6 +4,11 @@ FROM base AS builder
 WORKDIR /app
 COPY . .
 
+
+RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
+    --mount=type=cache,id=pnpm,target=/pnpm-store \
+    pnpm install --frozen-lockfile
+RUN pnpm build
 RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
     pnpm deploy --filter=qu_admin_organiser_backend --prod /prod/admin_organiser_backend
 
