@@ -1,5 +1,6 @@
-import type { ObjectId } from "mongodb";
-import { getDb } from "./connection.js";
+import type { ObjectId } from 'mongodb';
+import { getDb } from './connection.js';
+import argon2 from 'argon2';
 
 type TUser = {
     _id: ObjectId;
@@ -13,8 +14,10 @@ const db = await getDb();
 const usersCollection = db.collection('users');
 
 async function getUsers(): Promise<TUser[]> {
-    const users = (await usersCollection.find({}).toArray()) as unknown as TUser[];
-    
+    const users = (await usersCollection
+        .find({})
+        .toArray()) as unknown as TUser[];
+
     return users;
 }
 
@@ -22,15 +25,13 @@ async function findUser(username: string) {
     return usersCollection.find({ username }).toArray();
 }
 
-async function createUser(newUser: Omit<TUser, '_id'>): Promise<TUser> {
-    const userCreated = await usersCollection.insertOne(newUser);
+async function createUser(newUser: Omit<TUser, '_id'>): Promise<Omit<TUser, 'password'>> {
+    const hashedPassword = await argon2.hash(newUser.password);
+    const user: Omit<TUser, '_id'> = { ...newUser, password: hashedPassword };
 
-    return { _id: userCreated.insertedId, ...newUser };
+    const userCreated = await usersCollection.insertOne({ ...user });
+
+    return { _id: userCreated.insertedId, ...user };
 }
 
-
-export {
-    getUsers,
-    findUser,
-    createUser
-};
+export { getUsers, findUser, createUser };

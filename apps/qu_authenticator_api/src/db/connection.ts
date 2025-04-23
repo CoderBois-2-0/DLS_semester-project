@@ -1,10 +1,10 @@
-import { Db, MongoClient } from 'mongodb'
+import { Db, MongoClient } from 'mongodb';
 
 let db: null | Db = null;
 
 async function connect() {
     const url = process.env.DB_URL ?? 'No DB URL';
-    const client = new MongoClient(url);
+    const client = new MongoClient(encodeURIComponent(url));
 
     await client.connect();
 
@@ -19,7 +19,4 @@ async function getDb() {
     return db;
 }
 
-
-export {
-    getDb
-};
+export { getDb };

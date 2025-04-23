@@ -21,12 +21,15 @@ group "guest" {
 target "qu_node" {
     dockerfile = "./Dockerfile"
     context = "."
-    tags = ["qu_node:latest"]
+    tags = ["qu-node:latest"]
 }
 
 target "qu_authenticator_api" {
     dockerfile = "./apps/qu_authenticator_api/Dockerfile"
     context = "."
+    contexts = {
+        src = "./apps/qu_authenticator_api/"
+    }
     tags = ["qu-authenticator-api:latest"]
 }
 

@@ -18,6 +18,8 @@ nodes:
       # authenticator api
       - containerPort: 30500
         hostPort: 5000
+      - containerPort: 30510
+        hostPort: 27017
       # rabbitmq service
       - containerPort: 30600
         hostPort: 15672

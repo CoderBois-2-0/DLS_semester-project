@@ -59,7 +59,7 @@ kubectl apply -f k8/namespace.yaml
 
 # setup secrets manager
 gum log -l info 'Setting up secrets manager'
-helm upgrade sm-operator bitwarden/sm-operator -i --debug -n queue-up --values ./secrets_manager_values.yaml --devel
+helm upgrade sm-operator bitwarden/sm-operator -i -n queue-up --values ./secrets_manager_values.yaml --devel
 kubectl create secret generic bw-auth-token -n queue-up --from-literal=token="$BW_TOKEN"
 kubectl apply -f k8/secrets_manager.yaml
 

@@ -20,14 +20,19 @@ spec:
       ports:
         - protocol: TCP
           port: 3000
+        - protocol: TCP
+          port: 27017
   egress:
     # beware that this cidr should be machine specific in a prod setting
     - to:
       - ipBlock:
           cidr: 0.0.0.0/0
       ports:
-        - protocol: TCP
+        - 
+          protocol: TCP
           port: 3000
+        - protocol: TCP
+          port: 27017
 
 ---
 
@@ -56,7 +61,11 @@ spec:
           image: qu-authenticator-api:latest
           imagePullPolicy: Never
           ports:
-            - containerPort: 3000
+            - name: api-port
+              containerPort: 3000
+
+            - name: db-port
+              containerPort: 27017
           envFrom:
             - secretRef:
                 name: secrets-manager
@@ -85,7 +94,14 @@ spec:
     app: authenticator
     component: api
   ports:
-    - protocol: TCP
+    - name: api-svc
+      protocol: TCP
       port: 5000
-      targetPort: 3000
+      targetPort: api-port
       nodePort: 30500
+
+    - name: db-svc
+      protocol: TCP
+      port: 27017
+      targetPort: db-port
+      nodePort: 30510
