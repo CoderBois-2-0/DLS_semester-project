@@ -14,13 +14,16 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PACKAGE: '@coderbois-2-0/message-broker
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup PNPM
         uses: pnpm/action-setup@v2
         with:
-          version: 10.4.1
+          version: 10
       
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -31,7 +34,7 @@ jobs:
           cache: 'pnpm'
       
       - name: Install dependencies
-        run: pnpm --filter $PACKAGE install
+        run: pnpm --filter $PACKAGE install --frozen-lockfile
       
       - name: Build message-broker
         run: |
@@ -42,6 +45,3 @@ jobs:
         run: |
           cd packages/message_broker
           pnpm publish --filter $PACKAGE --no-git-checks
-        env:
-          QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PACKAGE: '@coderbois-2-0/message-broker'
