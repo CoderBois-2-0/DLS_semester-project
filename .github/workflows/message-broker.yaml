@@ -1,11 +1,11 @@
-name: qu_message_broker
+name: Publish message-broker
 
 on:
   push:
-    paths:
-      - 'packages/message_broker/**'
     branches:
       - main
+    paths:
+      - 'packages/message-broker/**'
 
 jobs:
   publish:
@@ -15,28 +15,29 @@ jobs:
       packages: write
       id-token: write
     env:
+      PACKAGE: '@coderbois-2-0/massage-broker'
       QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PACKAGE: '@coderbois-2-0/message-broker'
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
         with:
           version: 10
-      
-      - name: Set up Node.js
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: https://npm.pkg.github.com
+          registry-url: 'https://npm.pkg.github.com'
           cache: pnpm
-      
+
       - name: Install dependencies
         run: pnpm --filter $PACKAGE install --frozen-lockfile
-      
-      - name: Build message-broker
+
+      - name: Build package
         run: pnpm --filter $PACKAGE build
       
-      - name: Publish to GitHub Packages
-        run: pnpm publish --filter $PACKAGE --no-git-checks
+      - name: Publish to github packages
+        run: pnpm --filter $PACKAGE publish --no-git-checks
