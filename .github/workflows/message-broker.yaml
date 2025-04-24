@@ -15,7 +15,7 @@ jobs:
       packages: write
       id-token: write
     env:
-      PACKAGE: '@coderbois-2-0/massage-broker'
+      PACKAGE: '@coderbois-2-0/message-broker'
       QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
