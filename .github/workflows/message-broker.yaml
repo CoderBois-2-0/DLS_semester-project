@@ -1,11 +1,12 @@
-name: Publish message-broker
+name: Publish Message Broker Package
 
 on:
   push:
+    paths:
+      - 'packages/message_broker/**'
     branches:
       - main
-    paths:
-      - 'packages/message-broker/**'
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   publish:
@@ -14,30 +15,32 @@ jobs:
       contents: read
       packages: write
       id-token: write
-    env:
-      PACKAGE: '@coderbois-2-0/message-broker'
-      QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 10
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          registry-url: 'https://npm.pkg.github.com'
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm --filter $PACKAGE install --frozen-lockfile
-
-      - name: Build package
-        run: pnpm --filter $PACKAGE build
+      - uses: actions/checkout@v3
       
-      - name: Publish to github packages
-        run: pnpm --filter $PACKAGE publish --no-git-checks
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@coderbois-2-0'
+      
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.4.1
+      
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Build message-broker
+        run: |
+          cd packages/message_broker
+          pnpm build
+      
+      - name: Publish to GitHub Packages
+        run: |
+          cd packages/message_broker
+          pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
