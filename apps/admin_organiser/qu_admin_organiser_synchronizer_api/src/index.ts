@@ -7,7 +7,7 @@ import { createGuestQueue } from '@coderbois-2-0/message-broker';
 
 const app = new Hono();
 const PORT = parseInt(process.env.PORT || '3050'); // Admin Synchronizer port
-const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://localhost:5672';
+const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://mbtest:5672';
 
 async function setupRabbitMQ() {
     try {
