@@ -11,6 +11,7 @@
         "@hono/node-server": "^1.13.8",
         "hono": "^4.7.4",
         "@coderbois-2-0/message-broker": "^1.0.0",
+        "amqplib": "^0.10.7",
         "@coderbois-2-0/qu-admin-organiser-db-api": "1.0.0"
     },
     "devDependencies": {
