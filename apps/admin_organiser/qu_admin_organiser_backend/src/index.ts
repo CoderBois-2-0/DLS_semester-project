@@ -2,11 +2,14 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { connect } from '@coderbois-2-0/message-broker';
-import { createEventQueue } from '@coderbois-2-0/message-broker';
+import {
+    createEventQueue
+} from '@coderbois-2-0/message-broker';
 
 const app = new Hono();
 const PORT = parseInt(process.env.PORT || '3000');
-const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://message-broker-exposer:5672';
+const RABBITMQ_URL =
+    process.env.RABBITMQ_URL || 'amqp://message-broker-exposer:5672';
 
 let eventPublisher: (msg: string) => void;
 
@@ -30,19 +33,6 @@ async function setupRabbitMQ() {
 
 setupRabbitMQ();
 
-/**
- * @openapi
- * /submit-guest:
- *   post:
- *     description: Submit guest data to the Admin Synchronizer
- *     responses:
- *       200:
- *         description: Success
- *       503:
- *         description: RabbitMQ not connected
- *       500:
- *         description: Failed to submit guest data
- */
 app.post('/create-event', async (c) => {
     try {
         const eventData = await c.req.json();
