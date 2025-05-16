@@ -1,38 +1,38 @@
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  namespace: queue-up
-  name: authenticator-allow-host
-  labels:
-    app: authenticator
-    component: policy
-    policy-type: both
-spec:
-  podSelector:
-    matchLabels:
-      app: authenticator
-      component: api
-  ingress:
-    # beware that this cidr should be machine specific in a prod setting
-    - from:
-        - ipBlock:
-            cidr: 0.0.0.0/0
-      ports:
-        - protocol: TCP
-          port: 3000
-        - protocol: TCP
-          port: 27017
-  egress:
-    # beware that this cidr should be machine specific in a prod setting
-    - to:
-      - ipBlock:
-          cidr: 0.0.0.0/0
-      ports:
-        - 
-          protocol: TCP
-          port: 3000
-        - protocol: TCP
-          port: 27017
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   namespace: queue-up
+#   name: authenticator-allow-host
+#   labels:
+#     app: authenticator
+#     component: policy
+#     policy-type: both
+# spec:
+#   podSelector:
+#     matchLabels:
+#       app: authenticator
+#       component: api
+#   ingress:
+#     # beware that this cidr should be machine specific in a prod setting
+#     - from:
+#         - ipBlock:
+#             cidr: 0.0.0.0/0
+#       ports:
+#         - protocol: TCP
+#           port: 3000
+#         - protocol: TCP
+#           port: 27017
+#   egress:
+#     # beware that this cidr should be machine specific in a prod setting
+#     - to:
+#       - ipBlock:
+#           cidr: 0.0.0.0/0
+#       ports:
+#         - 
+#           protocol: TCP
+#           port: 3000
+#         - protocol: TCP
+#           port: 27017
 
 ---
 
