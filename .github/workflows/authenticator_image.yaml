@@ -1,0 +1,25 @@
+name: Push authenticator api image to github container registry
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/qu_authenticator_api/**
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push authenticator api image
+        run: |
+          docker buildx bake qu_authenticator_api --no-cache
+          docker push ghcr.io/CoderBois-2-0/DLS_queue-up/qu-authenticator-api:prod
