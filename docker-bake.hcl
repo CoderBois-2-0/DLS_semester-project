@@ -2,6 +2,10 @@ variable "QUEUE_UP_REG_TOKEN" {
     default = null
 }
 
+variable "TAG" {
+    default = "latest"
+}
+
 group "admin_organiser" {
     targets = [
         "qu_admin_organiser_backend",
@@ -21,7 +25,9 @@ group "guest" {
 target "qu_node" {
     dockerfile = "./Dockerfile"
     context = "."
-    tags = ["qu-node:latest"]
+    tags = [
+        "qu-node:${TAG}"
+    ]
 }
 
 target "qu_authenticator_api" {
