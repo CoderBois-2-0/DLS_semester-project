@@ -30,8 +30,7 @@ target "qu_node" {
     dockerfile = "./Dockerfile"
     context = "."
     tags = [
-        ? PUSH "ghcr.io/coderbois-2-0/dls_queue-up/qu-node:${TAG}"
-        "qu-node:${TAG}"
+        PUSH ? "ghcr.io/coderbois-2-0/dls_queue-up/qu-node:${TAG}" : "qu-node:${TAG}"
     ]
 }
 
