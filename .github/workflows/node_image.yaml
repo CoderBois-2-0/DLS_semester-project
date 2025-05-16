@@ -23,4 +23,4 @@ jobs:
       - name: Build and push qu_node image
         run: |
           docker buildx bake qu_node --no-cache
-          docker push ghcr.io/CoderBois-2-0/DLS_queue-up/qu-authenticator-api:$TAG
+          docker push ghcr.io/coderBois-2-0/dls_queue-up/qu-node:$TAG
