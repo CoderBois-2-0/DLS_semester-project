@@ -20,5 +20,5 @@ jobs:
 
       - name: Build and push authenticator api image
         run: |
-          docker buildx bake qu_authenticator_api --no-cache
+          docker buildx bake qu_node qu_authenticator_api --no-cache
           docker push ghcr.io/CoderBois-2-0/DLS_queue-up/qu-authenticator-api:prod
