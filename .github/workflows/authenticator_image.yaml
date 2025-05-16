@@ -3,10 +3,9 @@ name: Push authenticator api image to github container registry
 on:
   push:
     branches:
-      - main
+      - BOIS-43/*
     paths:
       - apps/qu_authenticator_api/**
-  workflow_dispatch:
 
 jobs:
   build-and-push:
