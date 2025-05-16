@@ -11,6 +11,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
+      PUSH: true
       TAG: 1.0
 
     steps:

@@ -6,6 +6,10 @@ variable "TAG" {
     default = "latest"
 }
 
+variable "PUSH" {
+    default = false
+}
+
 group "admin_organiser" {
     targets = [
         "qu_admin_organiser_backend",
@@ -26,6 +30,7 @@ target "qu_node" {
     dockerfile = "./Dockerfile"
     context = "."
     tags = [
+        ? PUSH "ghcr.io/coderbois-2-0/dls_queue-up/qu-node:${TAG}"
         "qu-node:${TAG}"
     ]
 }
