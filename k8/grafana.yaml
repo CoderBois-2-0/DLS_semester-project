@@ -1,120 +1,120 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: grafana-pv
-  labels:
-    app: grafana
-    component: pv
+    namespace: queue-up
+    name: grafana-pv
+    labels:
+        app: grafana
+        component: pv
 spec:
-  storageClassName: standard
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 2Gi
-  hostPath:
-    path: /grafana
+    storageClassName: standard
+    accessModes:
+        - ReadWriteOnce
+    capacity:
+        storage: 2Gi
+    hostPath:
+        path: /data/grafana
 
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: queue-up
-  name: grafana-pvc
-  labels:
-    app: grafana
-    component: pv-claim
+    namespace: queue-up
+    name: grafana-pvc
+    labels:
+        app: grafana
+        component: pv-claim
 spec:
-  volumeName: grafana-pv
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+    volumeName: grafana-pv
+    accessModes:
+        - ReadWriteOnce
+    resources:
+        requests:
+            storage: 1Gi
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: queue-up
-  name: grafana
-  labels:
-    app: grafana
-    component: grafana
-spec:
-  selector:
-    matchLabels:
-      app: grafana
-      component: grafana
-  template:
-    metadata:
-      labels:
+    namespace: queue-up
+    name: grafana
+    labels:
         app: grafana
         component: grafana
-    spec:
-      securityContext:
-        fsGroup: 472
-        supplementalGroups:
-          - 0
-      containers:
-        - name: grafana
-          image: grafana/grafana:11.6.0
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 3000
-              name: http-grafana
-              protocol: TCP
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /robots.txt
-              port: 3000
-              scheme: HTTP
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 2
-          livenessProbe:
-            failureThreshold: 3
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            successThreshold: 1
-            tcpSocket:
-              port: 3000
-            timeoutSeconds: 1
-          resources:
-            requests:
-              cpu: 250m
-              memory: 750Mi
-          volumeMounts:
-            - name: grafana-data
-              mountPath: /var/lib/grafana
-      volumes:
-        - name: grafana-data
-          persistentVolumeClaim:
-            claimName: grafana-pvc
+spec:
+    selector:
+        matchLabels:
+            app: grafana
+            component: grafana
+    template:
+        metadata:
+            labels:
+                app: grafana
+                component: grafana
+        spec:
+            securityContext:
+                fsGroup: 472
+                runAsUser: 472
+                runAsGroup: 472
+                supplementalGroups:
+                    - 0
+            containers:
+                - name: grafana
+                  image: grafana/grafana:11.6.0
+                  imagePullPolicy: IfNotPresent
+                  ports:
+                      - containerPort: 3000
+                        name: http-grafana
+                        protocol: TCP
+                  readinessProbe:
+                      failureThreshold: 3
+                      httpGet:
+                          path: /robots.txt
+                          port: 3000
+                          scheme: HTTP
+                      initialDelaySeconds: 10
+                      periodSeconds: 30
+                      successThreshold: 1
+                      timeoutSeconds: 2
+                  livenessProbe:
+                      failureThreshold: 3
+                      initialDelaySeconds: 30
+                      periodSeconds: 10
+                      successThreshold: 1
+                      tcpSocket:
+                          port: 3000
+                      timeoutSeconds: 1
+                  resources:
+                      requests:
+                          cpu: 250m
+                          memory: 750Mi
+                  volumeMounts:
+                      - name: grafana-data
+                        mountPath: /var/lib/grafana
+            volumes:
+                - name: grafana-data
+                  persistentVolumeClaim:
+                      claimName: grafana-pvc
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: queue-up
-  name: grafana-exposer
-  labels:
-    app: grafana
-    component: exposer
-    exposer-source: grafana
-    exposer-target: host
+    namespace: queue-up
+    name: grafana-exposer
+    labels:
+        app: grafana
+        component: exposer
+        exposer-source: grafana
+        exposer-target: host
 spec:
-  type: NodePort
-  ports:
-    - protocol: TCP
-      port: 3001
-      targetPort: http-grafana
-      nodePort: 30700
-  selector:
-    app: grafana
-    component: grafana
-  sessionAffinity: None
+    type: NodePort
+    ports:
+        - protocol: TCP
+          port: 3001
+          targetPort: http-grafana
+          nodePort: 30700
+    selector:
+        app: grafana
+        component: grafana
+    sessionAffinity: None

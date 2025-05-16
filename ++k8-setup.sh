@@ -11,9 +11,9 @@ function build_admin_organiser() {
 
     gum log -l info "Loading admin organiser images into kind"
 
-    kind load docker-image qu-admin-organiser-backend:latest --name queue-up
-    kind load docker-image qu-admin-organiser-frontend:latest --name queue-up
-    kind load docker-image qu-admin-organiser-synchronizer-api:latest --name queue-up
+    minikube image load qu-admin-organiser-backend:latest
+    minikube image load qu-admin-organiser-frontend:latest
+    minikube image load qu-admin-organiser-synchronizer-api:latest
 }
 
 function build_guest() {
@@ -27,9 +27,9 @@ function build_guest() {
 
     gum log -l info "Loading guest images into kind"
 
-    kind load docker-image qu-guest-backend:latest --name queue-up
-    kind load docker-image qu-guest-frontend:latest --name queue-up
-    kind load docker-image qu-guest-synchronizer-api:latest --name queue-up
+    minikube image load qu-guest-backend:latest
+    minikube image load qu-guest-frontend:latest
+    minikube image load qu-guest-synchronizer-api:latest
 }
 
 function build_authenticator() {
@@ -42,7 +42,7 @@ function build_authenticator() {
 
     gum log -l info "Loading authenticator images into kind"
 
-    kind load docker-image qu-authenticator-api:latest --name queue-up
+    minikube image load qu-authenticator-api:latest
 }
 
 options=("All" "Admin/Organiser" "Guest")
@@ -53,7 +53,7 @@ choice=$(gum choose "${options[@]}" --header "Which part of the system do you wi
 build_images=$(gum choose "${build_options[@]}" --header "Build docker images?")
 
 gum log -l info "Creating k8 Cluster"
-kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster already exists"
+#kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster already exists"
 
 kubectl apply -f k8/namespace.yaml
 
