@@ -10,6 +10,10 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     env:
       QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       IMAGE_NAMESPACE: ghcr.io/coderbois-2-0/dls_queue-up
@@ -24,8 +28,8 @@ jobs:
       - name: Log in to Docker Hub
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and push qu_admin_organiser_backend image
-        run: |
-          docker buildx bake $IMAGE_NAME --no-cache
-          docker push $IMAGE_NAMESPACE/$IMAGE_NAME:$TAG
-          docker push $IMAGE_NAMESPACE/$IMAGE_NAME:latest
+      - name: Build image
+        run: docker buildx bake $IMAGE_NAME --no-cache
+
+      - name: Push image
+        run: docker push $IMAGE_NAMESPACE/$IMAGE_NAME:$TAG
