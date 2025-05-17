@@ -16,7 +16,8 @@ jobs:
       id-token: write
     env:
       QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      IMAGE_NAME: ghcr.io/coderbois-2-0/dls_queue-up/qu_admin_organiser_backend
+      IMAGE_NAMESPACE: ghcr.io/coderbois-2-0/dls_queue-up/
+      IMAGE_NAME: qu_admin_organiser_backend
       PUSH: true
       TAG: 1.0.0
 
@@ -31,4 +32,4 @@ jobs:
         run: docker buildx bake $IMAGE_NAME --no-cache
 
       - name: Push image
-        run: docker push $IMAGE_NAME:$TAG
+        run: docker push $IMAGE_NAMESPACE/$IMAGE_NAME:$TAG
