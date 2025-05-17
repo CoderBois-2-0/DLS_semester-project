@@ -5,14 +5,14 @@ on:
     branches:
       - BOIS-43/*
     #paths:
-    #  - apps/qu_authenticator_api/**
+    #  - Dockerfile
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
       PUSH: true
-      TAG: 1.0
+      TAG: 1.0.0
 
     steps:
       - name: Checkout code
@@ -25,3 +25,4 @@ jobs:
         run: |
           docker buildx bake qu_node --no-cache
           docker push ghcr.io/coderbois-2-0/dls_queue-up/qu-node:$TAG
+          docker push ghcr.io/coderbois-2-0/dls_queue-up/qu-node:latest

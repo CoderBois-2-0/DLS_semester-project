@@ -1,5 +1,5 @@
 # BUILDER
-FROM qu-node:latest AS base
+FROM qu-node AS base
 
 FROM base AS builder
 
