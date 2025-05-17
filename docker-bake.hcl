@@ -4,7 +4,7 @@ variable "QUEUE_UP_REG_TOKEN" {
 
 // Github Container registry
 variable "GH_CR" {
-    default = "docker-image://ghcr.io/coderbois-2-0/dls_queue-up/qu-node:1"
+    default = "docker-image://ghcr.io/coderbois-2-0/dls_queue-up/qu-node:1.0.0"
 }
 
 variable "TAG" {
@@ -38,7 +38,7 @@ target "qu_node" {
         qu-node = GH_CR
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-node:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-node:latest"] : ["qu-node:${TAG}"]
-    
+
 }
 
 target "qu_authenticator_api" {
