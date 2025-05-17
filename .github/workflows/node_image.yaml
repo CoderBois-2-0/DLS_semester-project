@@ -11,6 +11,8 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
+      IMAGE_NAMESPACE: ghcr.io/coderbois-2-0/dls_queue-up
+      IMAGE_NAME: qu_node
       PUSH: true
       TAG: 1.0.0
 
@@ -23,6 +25,6 @@ jobs:
 
       - name: Build and push qu_node image
         run: |
-          docker buildx bake qu_node --no-cache
-          docker push ghcr.io/coderbois-2-0/dls_queue-up/qu-node:$TAG
-          docker push ghcr.io/coderbois-2-0/dls_queue-up/qu-node:latest
+          docker buildx bake $IMAGE_NAME --no-cache
+          docker push $IMAGE_NAMESPACE/$IMAGE_NAME:$TAG
+          docker push $IMAGE_NAMESPACE/$IMAGE_NAME:latest

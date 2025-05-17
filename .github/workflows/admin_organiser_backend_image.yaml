@@ -1,4 +1,4 @@
-name: Push base admin organiser backend image to github container registry
+name: Push admin organiser backend image to github container registry
 
 on:
   push:
@@ -11,6 +11,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
+      QUEUE_UP_REG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      IMAGE_NAMESPACE: ghcr.io/coderbois-2-0/dls_queue-up
+      IMAGE_NAME: qu_admin_organiser_backend
       PUSH: true
       TAG: 1.0.0
 
@@ -23,6 +26,6 @@ jobs:
 
       - name: Build and push qu_admin_organiser_backend image
         run: |
-          docker buildx bake qu_admin_organiser_backend --no-cache
-          docker push ghcr.io/coderbois-2-0/dls_queue-up/qu_admin_organiser_backend:$TAG
-          docker push ghcr.io/coderbois-2-0/dls_queue-up/qu_admin_organiser_backend:latest
+          docker buildx bake $IMAGE_NAME --no-cache
+          docker push $IMAGE_NAMESPACE/$IMAGE_NAME:$TAG
+          docker push $IMAGE_NAMESPACE/$IMAGE_NAME:latest
