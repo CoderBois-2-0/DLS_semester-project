@@ -46,6 +46,7 @@ target "qu_authenticator_api" {
     context = "."
     contexts = {
         qu-node = GH_CR
+        src = "./apps/qu_authenticator_api"
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-authenticator-api:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/authenticator-api:latest"] : ["qu-authenticator-api:latest"]
 }

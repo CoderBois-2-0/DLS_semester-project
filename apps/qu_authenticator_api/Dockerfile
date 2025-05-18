@@ -4,7 +4,9 @@ FROM qu-node AS base
 FROM base AS builder
 
 WORKDIR /app
-COPY . .
+
+COPY --from=base . .
+COPY --from=src . .
 
 RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
     --mount=type=cache,id=pnpm,target=/pnpm-store \
