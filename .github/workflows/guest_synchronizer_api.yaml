@@ -1,11 +1,11 @@
-name: Push admin organiser backend image to github container registry
+name: Push guest synchronizer api image to github container registry
 
 on:
   push:
     branches:
       - BOIS-43/*
     #paths:
-    #  - apps/admin_organiser/qu_admin_organiser_backend
+    #  - apps/admin_organiser/qu_guest_synchronizer_api
 
 jobs:
   build-and-push:
@@ -16,7 +16,7 @@ jobs:
       id-token: write
     env:
       QUEUE_UP_REG_TOKEN: ${{ secrets.QUEUE_UP_REG_TOKEN }}
-      IMAGE_NAME: ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-backend
+      IMAGE_NAME: ghcr.io/coderbois-2-0/dls_queue-up/qu-guest-synchronizer-api
       PUSH: true
       TAG: 1.0.0
 
@@ -28,7 +28,7 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build image
-        run: docker buildx bake qu_admin_organiser_backend
+        run: docker buildx bake qu_guest_synchronizer_api
 
       - name: Push image
         run: |
