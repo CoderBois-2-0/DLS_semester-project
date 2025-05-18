@@ -19,7 +19,6 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 hono
 
-COPY --from=builder --chown=hono:nodejs /prod/guest_backend/.env ./.env
 COPY --from=builder --chown=hono:nodejs /prod/guest_backend/node_modules ./node_modules
 COPY --from=builder --chown=hono:nodejs /prod/guest_backend/dist ./dist
 COPY --from=builder --chown=hono:nodejs /prod/guest_backend/package.json ./package.json

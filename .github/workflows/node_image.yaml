@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - BOIS-43/*
-    #paths:
-    #  - Dockerfile
+    paths:
+      - Dockerfile
 
 jobs:
   build-and-push:
