@@ -3,9 +3,9 @@ name: Push guest backend image to github container registry
 on:
   push:
     branches:
-      - BOIS-43/*
-    #paths:
-    #  - apps/admin_organiser/qu_guest_backend
+      - main
+    paths:
+      - apps/admin_organiser/qu_guest_backend
 
 jobs:
   build-and-push:

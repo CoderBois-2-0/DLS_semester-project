@@ -3,9 +3,9 @@ name: Push guest synchronizer api image to github container registry
 on:
   push:
     branches:
-      - BOIS-43/*
-    #paths:
-    #  - apps/admin_organiser/qu_guest_synchronizer_api
+      - main
+    paths:
+      - apps/admin_organiser/qu_guest_synchronizer_api
 
 jobs:
   build-and-push:

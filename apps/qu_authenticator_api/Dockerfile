@@ -3,10 +3,6 @@ FROM qu-node AS base
 
 FROM base AS builder
 
-RUN apk add --no-cache gcompat
-RUN apk add bash
-RUN apk add pnpm
-
 WORKDIR /app
 COPY . .
 
