@@ -3,14 +3,14 @@ FROM qu-node AS base
 
 FROM base AS builder
 
-WORKDIR /app
+WORKDIR /repo
 
 COPY --from=base . .
-COPY --from=src . .
+COPY --from=src . ./apps/qu_authenticator_app
 
 RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
     --mount=type=cache,id=pnpm,target=/pnpm-store \
-    pnpm install --frozen-lockfile
+    pnpm install --filter=qu_authenticator_api --frozen-lockfile
 RUN pnpm build
 RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
     pnpm deploy --filter=qu_authenticator_api --prod /prod/authenticator_api

@@ -4,7 +4,7 @@ variable "QUEUE_UP_REG_TOKEN" {
 
 // Github Container registry
 variable "GH_CR" {
-    default = "docker-image://ghcr.io/coderbois-2-0/dls_queue-up/qu-node:1.0.0"
+    default = "docker-image://ghcr.io/coderbois-2-0/dls_queue-up/qu-node:1.0.1"
 }
 
 variable "TAG" {

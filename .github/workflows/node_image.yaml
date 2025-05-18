@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PUSH: true
-      TAG: 1.0.1
+      TAG: 1.0.2
 
     steps:
       - name: Checkout code
