@@ -11,7 +11,6 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: qu_node
       PUSH: true
       TAG: 1.0.0
 
@@ -23,7 +22,7 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build image
-        run: docker buildx bake $IMAGE_NAME
+        run: docker buildx bake qu_node
 
       - name: Push image
-        run: docker push ghcr.io/coderbois-2-0/dls_queue-up/$IMAGE_NAME:$TAG
+        run: docker push ghcr.io/coderbois-2-0/dls_queue-up/qu-node:$TAG
