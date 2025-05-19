@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - BOIS-43/*
-    #paths:
-    #  - apps/admin_organiser/qu_admin_organiser_backend
+    paths:
+      - apps/admin_organiser/qu_admin_organiser_backend
 
 jobs:
   build-and-push:

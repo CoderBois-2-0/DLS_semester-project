@@ -16,7 +16,7 @@ jobs:
       id-token: write
     env:
       QUEUE_UP_REG_TOKEN: ${{ secrets.QUEUE_UP_REG_TOKEN }}
-      IMAGE_NAME: ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-syncrhonizer-api
+      IMAGE_NAME: ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-synchronizer-api
       PUSH: true
       TAG: 1.0.0
 
