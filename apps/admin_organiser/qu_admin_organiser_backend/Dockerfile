@@ -3,7 +3,10 @@ FROM qu-node AS base
 FROM base AS builder
 WORKDIR /repo
 
-COPY --from=base /base .
+COPY ./.npmrc .
+COPY ./package.json .
+COPY ./pnpm-lock.yaml .
+COPY ./pnpm-workspace.yaml .
 COPY --from=src . ./apps/admin_organiser/qu_admin_organiser_backend
 
 
