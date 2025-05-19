@@ -78,7 +78,7 @@ target "qu_admin_organiser_synchronizer_api" {
         qu-node = GH_CR
         src = "./apps/admin_organiser/qu_admin_organiser_synchronizer_api/"
     }
-    tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-synchronizer:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-synchronizer-api:latest"] : ["qu-admin-organiser-synchronizer-api:latest"]
+    tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-synchronizer-api:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-synchronizer-api:latest"] : ["qu-admin-organiser-synchronizer-api:latest"]
     secret = [
         { type = "env", id = "QUEUE_UP_REG_TOKEN" }
     ]
