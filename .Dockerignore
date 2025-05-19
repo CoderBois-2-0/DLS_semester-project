@@ -11,4 +11,5 @@ README.md
 .env.example
 dist
 
+.zed
 .vscode

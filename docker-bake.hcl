@@ -4,7 +4,7 @@ variable "QUEUE_UP_REG_TOKEN" {
 
 // Github Container registry
 variable "GH_CR" {
-    default = "docker-image://ghcr.io/coderbois-2-0/dls_queue-up/qu-node:1.0.1"
+    default = "docker-image://ghcr.io/coderbois-2-0/dls_queue-up/qu-node:1.0.2"
 }
 
 variable "TAG" {
@@ -34,9 +34,6 @@ group "guest" {
 target "qu_node" {
     dockerfile = "./Dockerfile"
     context = "."
-    contexts = {
-        qu-node = GH_CR
-    }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-node:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-node:latest"] : ["qu-node:${TAG}"]
 
 }
@@ -46,7 +43,7 @@ target "qu_authenticator_api" {
     context = "."
     contexts = {
         qu-node = GH_CR
-        src = "./apps/qu_authenticator_api"
+        src = "./apps/qu_authenticator_api/"
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-authenticator-api:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/authenticator-api:latest"] : ["qu-authenticator-api:latest"]
 }
@@ -56,6 +53,7 @@ target "qu_admin_organiser_backend" {
     context = "."
     contexts = {
         qu-node = GH_CR
+        src = "./apps/qu_admin_organiser_backend/"
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-backend:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-backend:latest"] : ["qu-admin-organiser-backend:latest"]
     secret = [
@@ -68,6 +66,7 @@ target "qu_admin_organiser_frontend" {
     context = "."
     contexts = {
         qu-node = GH_CR
+        src = "./apps/qu_admin_organiser_frontend/"
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-frontend:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-frontend:latest"] : ["qu-admin-organiser-frontend:latest"]
 }
@@ -77,6 +76,7 @@ target "qu_admin_organiser_synchronizer_api" {
     context = "."
     contexts = {
         qu-node = GH_CR
+        src = "./apps/qu_admin_organiser_synchronizer_api/"
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-synchronizer:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-admin-organiser-synchronizer-api:latest"] : ["qu-admin-organiser-synchronizer-api:latest"]
     secret = [
@@ -89,6 +89,8 @@ target qu_guest_backend {
     context = "."
     contexts = {
         qu-node = GH_CR
+        src = "./apps/qu_guest_backend/"
+        src = "./apps/qu_guest_backend/"
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-guest-backend:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-guest-backend:latest"] : ["qu-guest-backend:latest"]
     secret = [
@@ -101,6 +103,7 @@ target "qu_guest_frontend" {
     context = "."
     contexts = {
         qu-node = GH_CR
+        src = "./apps/qu_guest_frontend/"
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-guest-frontend:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-guest-frontend:latest"] : ["qu-guest-frontend:latest"]
 }
@@ -110,6 +113,7 @@ target "qu_guest_synchronizer_api" {
     context = "."
     contexts = {
         qu-node = GH_CR
+        src = "./apps/qu_guest_synchronizer_api/"
     }
     tags = PUSH ? ["ghcr.io/coderbois-2-0/dls_queue-up/qu-guest-synchronizer-api:${TAG}", "ghcr.io/coderbois-2-0/dls_queue-up/qu-guest-synchronizer-api:latest"] : ["qu-guest-synchronizer-api:latest"]
     secret = [
