@@ -1,37 +1,37 @@
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  namespace: queue-up
-  name: admin-organiser-backend-allow-host-and-message-broker
-  labels:
-    app: admin-organiser-backend
-    component: policy
-    policy-type: both
-spec:
-  podSelector:
-    matchLabels:
-      app: admin-organiser-backend
-      component: backend
-  ingress:
-    # beware that this cidr should be machine specific in a prod setting
-    - from:
-        - ipBlock:
-            cidr: 0.0.0.0/0
-      ports:
-        - protocol: TCP
-          port: 3000
-        - protocol: TCP
-          port: 5672
-  egress:
-    # beware that this cidr should be machine specific in a prod setting
-    - to:
-      - ipBlock:
-          cidr: 0.0.0.0/0
-      ports:
-        - protocol: TCP
-          port: 3000
-        - protocol: TCP
-          port: 5672
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   namespace: queue-up
+#   name: admin-organiser-backend-allow-host-and-message-broker
+#   labels:
+#     app: admin-organiser-backend
+#     component: policy
+#     policy-type: both
+# spec:
+#   podSelector:
+#     matchLabels:
+#       app: admin-organiser-backend
+#       component: backend
+#   ingress:
+#     # beware that this cidr should be machine specific in a prod setting
+#     - from:
+#         - ipBlock:
+#             cidr: 0.0.0.0/0
+#       ports:
+#         - protocol: TCP
+#           port: 3000
+#         - protocol: TCP
+#           port: 5672
+#   egress:
+#     # beware that this cidr should be machine specific in a prod setting
+#     - to:
+#       - ipBlock:
+#           cidr: 0.0.0.0/0
+#       ports:
+#         - protocol: TCP
+#           port: 3000
+#         - protocol: TCP
+#           port: 5672
 
 
 ---

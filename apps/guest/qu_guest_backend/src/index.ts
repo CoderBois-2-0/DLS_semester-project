@@ -6,7 +6,7 @@ import { createGuestQueue } from '@coderbois-2-0/message-broker';
 
 const app = new Hono();
 const PORT = parseInt(process.env.PORT || '3000');
-const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://localhost:5672';
+const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://message-broker-exposer:5672';
 
 let guestPublisher: (msg: string) => void;
 
@@ -70,7 +70,37 @@ app.post('/submit-guest', async (c) => {
     }
 });
 
+app.post('/test', async (c) => {
+    try {
+        // Read request body as text instead of JSON
+        const testString = await c.req.text();
+
+        if (guestPublisher) {
+            // Publish the raw string to RabbitMQ
+            guestPublisher(testString);
+            console.log('Published test string to RabbitMQ:', testString);
+            return c.json({
+                success: true,
+                message: 'Test string sent to Admin Synchronizer',
+                content: testString,
+            });
+        } else {
+            return c.json(
+                { success: false, message: 'RabbitMQ not connected' },
+                503
+            );
+        }
+    } catch (error) {
+        console.error('Error processing test string:', error);
+        return c.json(
+            { success: false, message: 'Failed to process test string' },
+            500
+        );
+    }
+});
+
 console.log(`Guest Backend API running on port ${PORT}`);
+await setupRabbitMQ();
 serve({
     fetch: app.fetch,
     port: PORT,
