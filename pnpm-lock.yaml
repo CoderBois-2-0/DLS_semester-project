@@ -39,6 +39,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.13.8
         version: 1.13.8(hono@4.7.4)
+      amqplib:
+        specifier: ^0.10.7
+        version: 0.10.7
       hono:
         specifier: ^4.7.4
         version: 4.7.4
@@ -95,6 +98,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.13.8
         version: 1.13.8(hono@4.7.4)
+      amqplib:
+        specifier: ^0.10.7
+        version: 0.10.7
       hono:
         specifier: ^4.7.4
         version: 4.7.4
@@ -173,6 +179,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.13.8
         version: 1.13.8(hono@4.7.4)
+      amqplib:
+        specifier: ^0.10.7
+        version: 0.10.7
       hono:
         specifier: ^4.7.4
         version: 4.7.4

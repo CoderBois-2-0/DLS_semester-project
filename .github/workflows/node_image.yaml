@@ -3,7 +3,7 @@ name: Push base node image to github container registry
 on:
   push:
     branches:
-      - BOIS-43/*
+      - main
     paths:
       - Dockerfile
 
