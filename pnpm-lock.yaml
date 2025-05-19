@@ -39,6 +39,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.13.8
         version: 1.13.8(hono@4.7.4)
+      amqplib:
+        specifier: ^0.10.7
+        version: 0.10.7
       hono:
         specifier: ^4.7.4
         version: 4.7.4
@@ -89,12 +92,15 @@ importers:
       '@coderbois-2-0/message-broker':
         specifier: ^1.0.0
         version: 1.0.0
+      '@coderbois-2-0/qu-admin-organiser-db-api':
+        specifier: ^2.0.0
+        version: 2.0.0(@types/pg@8.11.11)(gel@2.0.1)(mysql2@3.14.0)
       '@hono/node-server':
         specifier: ^1.13.8
         version: 1.13.8(hono@4.7.4)
-      '@queue-up/db-api':
-        specifier: workspace:@coderbois-2-0/qu-admin-organiser-db-api@*
-        version: link:../../../packages/qu_admin_organiser_db_api
+      amqplib:
+        specifier: ^0.10.7
+        version: 0.10.7
       hono:
         specifier: ^4.7.4
         version: 4.7.4
@@ -173,6 +179,9 @@ importers:
       '@hono/node-server':
         specifier: ^1.13.8
         version: 1.13.8(hono@4.7.4)
+      amqplib:
+        specifier: ^0.10.7
+        version: 0.10.7
       hono:
         specifier: ^4.7.4
         version: 4.7.4
@@ -346,6 +355,9 @@ packages:
 
   '@coderbois-2-0/qu-admin-organiser-db-api@1.0.0':
     resolution: {integrity: sha512-/zM3NoJ1XUUgRdyXbbWzLxndUJ9oDMz0NJaPSMzptzKjQ31aB/54EMQb4bQoyTnrCZH4dV1v5dE04hK4xawLCg==, tarball: https://npm.pkg.github.com/download/@coderbois-2-0/qu-admin-organiser-db-api/1.0.0/01045ed29b4a6c077a28e45dd208beb0644fdfee}
+
+  '@coderbois-2-0/qu-admin-organiser-db-api@2.0.0':
+    resolution: {integrity: sha512-BxOtS+bHluVoq/Fer0rPdEVcYAZreXIkiAMqbiKQRgNgBbqfJFUTzcLbCGV374d0ca5hAvasFr1KGGNfHhg0+Q==, tarball: https://npm.pkg.github.com/download/@coderbois-2-0/qu-admin-organiser-db-api/2.0.0/1c4046e84769f4a78d15644d42a4c0b75f06aad1}
 
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
@@ -2632,6 +2644,40 @@ snapshots:
       - sql.js
       - sqlite3
       - supports-color
+
+  '@coderbois-2-0/qu-admin-organiser-db-api@2.0.0(@types/pg@8.11.11)(gel@2.0.1)(mysql2@3.14.0)':
+    dependencies:
+      '@neondatabase/serverless': 1.0.0
+      drizzle-orm: 0.41.0(@neondatabase/serverless@1.0.0)(@types/pg@8.11.11)(gel@2.0.1)(mysql2@3.14.0)(pg@8.14.1)
+      pg: 8.14.1
+    transitivePeerDependencies:
+      - '@aws-sdk/client-rds-data'
+      - '@cloudflare/workers-types'
+      - '@electric-sql/pglite'
+      - '@libsql/client'
+      - '@libsql/client-wasm'
+      - '@op-engineering/op-sqlite'
+      - '@opentelemetry/api'
+      - '@planetscale/database'
+      - '@prisma/client'
+      - '@tidbcloud/serverless'
+      - '@types/better-sqlite3'
+      - '@types/pg'
+      - '@types/sql.js'
+      - '@vercel/postgres'
+      - '@xata.io/client'
+      - better-sqlite3
+      - bun-types
+      - expo-sqlite
+      - gel
+      - knex
+      - kysely
+      - mysql2
+      - pg-native
+      - postgres
+      - prisma
+      - sql.js
+      - sqlite3
 
   '@drizzle-team/brocli@0.10.2': {}
 

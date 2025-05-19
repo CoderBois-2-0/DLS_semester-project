@@ -1,5 +1,5 @@
 // Guest Synchronizer API
-// This API is responsible for synchronizing data from the admin organiser backend to the guest DB. 
+// This API is responsible for synchronizing data from the admin organiser backend to the guest DB.
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { connect } from '@coderbois-2-0/message-broker';
@@ -7,7 +7,8 @@ import { createEventQueue } from '@coderbois-2-0/message-broker';
 
 const app = new Hono();
 const PORT = parseInt(process.env.PORT || '3040');
-const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://message-broker-exposer:5672';
+const RABBITMQ_URL =
+    process.env.RABBITMQ_URL || 'amqp://message-broker-exposer:5672';
 
 async function setupRabbitMQ() {
     try {

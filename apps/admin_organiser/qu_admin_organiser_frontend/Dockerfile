@@ -1,15 +1,20 @@
-FROM qu-node:latest AS base
-FROM base AS builder
+FROM qu-node AS base
 
-WORKDIR /app
-COPY . .
+FROM base AS builder
+WORKDIR /repo
+
+COPY ./.npmrc .
+COPY ./package.json .
+COPY ./pnpm-lock.yaml .
+COPY ./pnpm-workspace.yaml .
+COPY --from=src . ./apps/admin_organiser/qu_admin_organiser_frontend
 
 RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
     --mount=type=cache,id=pnpm,target=/pnpm-store \
-    pnpm install --frozen-lockfile
-RUN pnpm build
+    pnpm --filter qu_admin_organiser_frontend install --frozen-lockfile
+RUN pnpm --filter qu_admin_organiser_frontend build
 RUN --mount=type=secret,id=QUEUE_UP_REG_TOKEN,env=QUEUE_UP_REG_TOKEN \
-    pnpm deploy --filter=qu_admin_organiser_frontend --prod /prod/admin_organiser_frontend
+    pnpm --filter qu_admin_organiser_frontend deploy --prod /prod/admin_organiser_frontend
 
 FROM nginx:alpine3.21 AS qu_admin_organiser_frontend
 

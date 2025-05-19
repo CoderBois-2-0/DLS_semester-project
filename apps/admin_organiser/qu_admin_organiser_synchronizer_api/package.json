@@ -8,11 +8,11 @@
         "build": "tsc"
     },
     "dependencies": {
+        "@coderbois-2-0/message-broker": "^1.0.0",
+        "@coderbois-2-0/qu-admin-organiser-db-api": "^2.0.0",
         "@hono/node-server": "^1.13.8",
         "hono": "^4.7.4",
-        "@coderbois-2-0/message-broker": "^1.0.0",
-        "amqplib": "^0.10.7",
-        "@queue-up/db-api": "workspace:@coderbois-2-0/qu-admin-organiser-db-api@*"
+        "amqplib": "^0.10.7"
     },
     "devDependencies": {
         "@types/node": "^20.11.17",
