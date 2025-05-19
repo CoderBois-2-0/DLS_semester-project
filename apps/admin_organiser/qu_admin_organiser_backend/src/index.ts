@@ -6,7 +6,8 @@ import { createEventQueue } from '@coderbois-2-0/message-broker';
 
 const app = new Hono();
 const PORT = parseInt(process.env.PORT || '3000');
-const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://message-broker-exposer:5672';
+const RABBITMQ_URL =
+    process.env.RABBITMQ_URL || 'amqp://message-broker-exposer:5672';
 
 let eventPublisher: (msg: string) => void;
 
