@@ -56,12 +56,18 @@ gum log -l info "Creating k8 Cluster"
 kind create cluster --name queue-up --config kind.config.yaml || echo "Cluster already exists"
 
 kubectl apply -f k8/namespace.yaml
+NAMESPACE="queue-up"
 
 # setup secrets manager
 gum log -l info 'Setting up secrets manager'
-helm upgrade sm-operator bitwarden/sm-operator -i -n queue-up --values ./secrets_manager_values.yaml --devel
-kubectl create secret generic bw-auth-token -n queue-up --from-literal=token="$BW_TOKEN"
+helm upgrade sm-operator bitwarden/sm-operator -i -n $NAMESPACE --values ./secrets_manager_values.yaml --devel
+kubectl create secret generic bw-auth-token -n $NAMESPACE --from-literal=token="$BW_TOKEN"
 kubectl apply -f k8/secrets_manager.yaml
+
+# grafana alloy
+helm install --namespace $NAMESPACE alloy grafana/alloy
+kubectl create configmap --namespace $NAMESPACE alloy-config "--from-file=config.alloy=./config.alloy"
+helm upgrade --namespace $NAMESPACE alloy grafana/alloy -f ./grafana_alloy_values.yaml
 
 
 if [[ $build_images == 'Yes' ]]
