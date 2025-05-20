@@ -14,6 +14,7 @@ The project relies on a few external services
 - Gum
 - External Kubernetes resources through Helm
   - Bitwarden secret
+  - Grafana Alloy
 
 ### kind
 [Kind](https://kind.sigs.k8s.io) is a service that allows for running a local kubernetes cluster in a docker container. Check out the provided link to see how to install for your system.
@@ -31,5 +32,13 @@ Whenever you install a chart through Helm, remeber to update, see the provided c
 
 ```bash
 helm repo add bitwarden https://charts.bitwarden.com/
+helm repo update
+```
+
+#### Grafana Alloy
+[Grafana Alloy](https://grafana.com/docs/alloy/latest/) is used for collecting, transforing and sending data meant for Grafana services.
+
+```bash
+helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 ```
