@@ -23,7 +23,7 @@ metadata:
     name: grafana-pvc
     labels:
         app: grafana
-        component: pv-claim
+        component: pvc
 spec:
     volumeName: grafana-pv
     accessModes:
@@ -53,9 +53,9 @@ spec:
                 component: grafana
         spec:
             securityContext:
-                fsGroup: 472
-                runAsUser: 472
-                runAsGroup: 472
+                fsGroup: 0
+                runAsUser: 0
+                runAsGroup: 0
                 supplementalGroups:
                     - 0
             containers:

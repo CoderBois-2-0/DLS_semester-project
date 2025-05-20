@@ -4,8 +4,8 @@ nodes:
   - role: control-plane
     # used to persist grafana between start ups
     extraMounts:
-      - hostPath: ~/grafana
-        containerPath: /grafana
+      - hostPath: /Docker/grafana
+        containerPath: /data/grafana
     extraPortMappings:
       # admin organiser backend
       - containerPort: 30100
@@ -29,3 +29,6 @@ nodes:
       - containerPort: 30700
         hostPort: 3001
   - role: worker
+    extraMounts:
+      - hostPath: /Docker/grafana
+        containerPath: /data/grafana
